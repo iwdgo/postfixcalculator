@@ -25,6 +25,18 @@ func TestRPN_emulating_stack(t *testing.T) {
 	}
 }
 
+//To check panicing on invalid expression
+func TestRPN_emulating_stack_panic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Error("The code did not panic")
+		}
+	}()
+
+	// The following is the code under test
+	RPN_emulating_stack(InvalidInput)
+}
+
 /*
 go test -bench=. allows to test the func
 */

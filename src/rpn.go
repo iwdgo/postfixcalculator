@@ -53,7 +53,7 @@ func RPN(RPNInput string) float64 {
 		err = nil
 		index = 0
 		for err == nil && index < len(words) {
-			_, err = strconv.ParseFloat(words[index], 64) //0 returns an int for some reason
+			_, err = strconv.ParseFloat(words[index], 64) //0 iso 64 returns an int for some reason
 			index++
 		}
 		index -= 1

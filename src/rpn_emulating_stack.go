@@ -13,7 +13,10 @@ Original is from http://rosettacode.org/wiki/Parsing/RPN_calculator_algorithm#Go
 a printed output can be found.
 
 This emulation is not using a stack in the strict sense as it is accessed sequentially
-when only pop/push operations are allowed by definition.
+when only pop/push operations are allowed by definition but it is the most efficient as the
+"stack" only contains the unused parts. Anyother method requires slice editing and is more
+consuming.
+
 */
 func RPN_emulating_stack(input string) float64 {
 	var stack []float64 //"stack" only contains numbers
