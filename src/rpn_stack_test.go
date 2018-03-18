@@ -6,33 +6,18 @@ import (
 )
 
 /*
-Running a single test
+Running exemples where fmt is needed to check output.
+
 */
 func ExampleRPN_stack() {
 	fmt.Printf("%.13f", RPN_stack(input))
 	// Output: 3.0001220703125
 }
 
-/* Debug output when uncommenting fmt is
-For postfix "3 4 2 * 1 5 - 2 3 ^ ^ / +"
-
-Token            Action            Stack
-  3    Push num onto top of stack  3
-  4    Push num onto top of stack  4
-  2    Push num onto top of stack  2
-  *    Apply op to top of stack    8
-  1    Push num onto top of stack  1
-  5    Push num onto top of stack  5
-  -    Apply op to top of stack    -4
-  2    Push num onto top of stack  2
-  3    Push num onto top of stack  3
-  ^    Apply op to top of stack    8
-  ^    Apply op to top of stack    65536
-  /    Apply op to top of stack    0.0001220703125
-  +    Apply op to top of stack    3.0001220703125
-
-The final value is 3.0001220703125
-*/
+func ExampleRPN_stack_sqrt() {
+	fmt.Printf("%f", RPN_stack(RPNInput))
+	// Output: 30.000000
+}
 
 func TestRPN_stack(t *testing.T) {
 	actual := RPN_stack(input)
@@ -42,7 +27,7 @@ func TestRPN_stack(t *testing.T) {
 }
 
 /*
-go test -bench=. allows to test the func Test1
+go test -bench=. allows to test
 */
 func BenchmarkRPN_stack(b *testing.B) {
 	// run the Fib function b.N times

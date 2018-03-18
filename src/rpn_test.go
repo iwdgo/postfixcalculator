@@ -11,6 +11,11 @@ func ExampleRPN() {
 	// Output: 30.000000
 }
 
+func ExampleRPNExp() {
+	fmt.Printf("%.13f", RPN(input))
+	// Output: 3.0001220703125
+}
+
 /* */
 
 func TestRPN(t *testing.T) {
@@ -21,10 +26,9 @@ func TestRPN(t *testing.T) {
 }
 
 /*
-go test -bench=. allows to test the func main
+go test -bench=. allows to test the func
 */
 func BenchmarkRPN(b *testing.B) {
-	// run the Fib function b.N times
 	for n := 0; n < b.N; n++ {
 		RPN(RPNInput)
 	}

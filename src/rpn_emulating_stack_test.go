@@ -13,26 +13,10 @@ func ExampleRPN_emulating_stack() {
 	// Output: 3.0001220703125
 }
 
-/*
-For postfix "3 4 2 * 1 5 - 2 3 ^ ^ / +"
-
-Token            Action            Stack
-  3    Push num onto top of stack  [3]
-  4    Push num onto top of stack  [3 4]
-  2    Push num onto top of stack  [3 4 2]
-  *    Apply op to top of stack    [3 8]
-  1    Push num onto top of stack  [3 8 1]
-  5    Push num onto top of stack  [3 8 1 5]
-  -    Apply op to top of stack    [3 8 -4]
-  2    Push num onto top of stack  [3 8 -4 2]
-  3    Push num onto top of stack  [3 8 -4 2 3]
-  ^    Apply op to top of stack    [3 8 -4 8]
-  ^    Apply op to top of stack    [3 8 65536]
-  /    Apply op to top of stack    [3 0.0001220703125]
-  +    Apply op to top of stack    [3.0001220703125]
-
-The final value is 3.0001220703125
-*/
+func ExampleRPN_emulating_stack_sqrt() {
+	fmt.Printf("%f", RPN_emulating_stack(RPNInput))
+	// Output: 30.000000
+}
 
 func TestRPN_emulating_stack(t *testing.T) {
 	actual := RPN_emulating_stack(input)
@@ -42,7 +26,7 @@ func TestRPN_emulating_stack(t *testing.T) {
 }
 
 /*
-go test -bench=. allows to test the func Test1
+go test -bench=. allows to test the func
 */
 func BenchmarkRPN_emulating_stack(b *testing.B) {
 	// run the Fib function b.N times
