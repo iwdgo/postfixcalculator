@@ -24,10 +24,10 @@ As soon as you add slice editing, you divide performance by 3.
 
 goos: windows
 goarch: amd64
-BenchmarkRPN_emulating_stack-4 | 2000000 | 961 ns/op
-BenchmarkRPN_operators_list-4 | 500000 | 3209 ns/op
-BenchmarkRPN_operators_no_fields-4 | 500000 | 2892 ns/op
-BenchmarkRPN_stack-4 | 1000000 | 1884 ns/op
-BenchmarkRPN-4 | 500000 | 3988 ns/op
+BenchmarkRPN_emulating_stack-4     2000000 | 961 ns/op
+BenchmarkRPN_operators_list-4       500000 | 3209 ns/op
+BenchmarkRPN_operators_no_fields-4  500000 | 2892 ns/op
+BenchmarkRPN_stack-4               1000000 | 1884 ns/op
+BenchmarkRPN-4                      500000 | 3988 ns/op
 PASS
 
