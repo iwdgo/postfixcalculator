@@ -1,6 +1,6 @@
 ***Reverse Polish Notation calculator***
 
-Usual problem can be solved in Go using :
+This well known problem can be solved in Go using :
 - slice editing (RPN)
 - emulating stack using the slice (RPN emulating stack)
 - using a stack-like struct (RPN stack)
@@ -14,23 +14,26 @@ All elements are providing the same features :
 - unary operator sqrt
 - panics on invalid values and operators
 
-You can run examples and tests using "go test"
-
-To run benchmark use "go test bench=."
+You can run examples and tests using "go test" in the src directory.
+To run benchmark use "go test bench=." in the same directory.
 
 Emulating the stack is the most efficient method.
-Using a struct in a provided Go Doc package is already costly.
+Using a struct in a provided Go Doc package is already costly by a factor of 2.
 As soon as you add slice editing, you divide performance by 3.
+The worst being to hold all elements of the expression in one slice.
 
 **Results**
 
-`goos: windows
+```
+ goos: windows
  goarch: amd64
  BenchmarkRPN_emulating_stack-4           2000000               938 ns/op
- BenchmarkRPN_operators_list-4             500000              3153 ns/op
- BenchmarkRPN_operators_no_fields-4        500000              2826 ns/op
  BenchmarkRPN_stack-4                     1000000              1746 ns/op
+ BenchmarkRPN_operators_no_fields-4        500000              2826 ns/op
+ BenchmarkRPN_operators_list-4             500000              3153 ns/op
  BenchmarkRPN-4                            300000              3813 ns/op`
+```
+
  
- `
- `
+ 
+ 
