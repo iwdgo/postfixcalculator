@@ -14,8 +14,7 @@ a printed output can be found.
 
 This emulation is not using a stack in the strict sense as it is accessed sequentially
 when only pop/push operations are allowed by definition but it is the most efficient as the
-"stack" only contains the unused parts. Anyother method requires slice editing and is more
-consuming.
+"stack" only contains the unused parts of the expression.
 
 */
 func RPN_emulating_stack(input string) float64 {
