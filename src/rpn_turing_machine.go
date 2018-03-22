@@ -37,8 +37,8 @@ func RPN_Turing_machine(RPNInput string) float64 {
 				if w == "sqrt" {
 					//unary operator
 					i = index - 1
-					num = 0.0
-					for num == 0.0 && i >= 0 {
+					//no num value can detect op is found
+					for words[i] != "num" && i >= 0 {
 						//if word is ?, no number there, move before
 						//if word is num, already converted, read numbers
 						//otherwise attempt conversion
@@ -58,39 +58,33 @@ func RPN_Turing_machine(RPNInput string) float64 {
 				} else {
 					//binary operator
 					i = index - 1
-					rightOp = 0.0
-					for rightOp == 0.0 && i >= 0  {
+					for words[i] != "num" && i >= 0  {
 						if (words[i] == "?") {
 							i--
-						} else if words[i] == "num" {
-							rightOp = numbers[i]
-							words[i] = "?" //erasing value
-						} else {
-							rightOp, err = strconv.ParseFloat(words[i], 64)
+						} else if words[i] != "num" {
+							numbers[i], err = strconv.ParseFloat(words[i], 64)
 							if err != nil {
 								panic("Invalid right operand")
 							}
-							//numbers[index-1] =
-							words[i] = "?" //erasing value
+							words[i] = "num" //conversion done
 						}
 					}
-					//looking for the left operand which is to the left
+					rightOp = numbers[i]
+					words[i] = "?" //erasing value
+					//looking for the left operand which is to the left...
 					i--
-					leftOp = 0.0
-					for leftOp == 0.0 && i >= 0  {
+					for words[i] != "num" && i >= 0  {
 						if (words[i] == "?") {
 							i--
-						} else if words[i] == "num" {
-							leftOp = numbers[i]
-						} else {
-							leftOp, err = strconv.ParseFloat(words[i], 64)
+						} else if words[i] != "num" {
+							numbers[i], err = strconv.ParseFloat(words[i], 64)
 							if err != nil {
-								panic("Invalid right operand")
+								panic("Invalid left operand")
 							}
-							words[i] = "num" //result will be stored
+							words[i] = "num" //conversion done
 						}
 					}
-
+					leftOp = numbers[i] //cell not erased as it keeps result
 					switch w {
 					case "+":
 						{
