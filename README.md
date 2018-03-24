@@ -26,21 +26,21 @@ The worst being to hold all elements of the expression in one slice.
 Slice is the underlying type of string. So string editing won't change anything and might be
 worse as a string is read-only and might be copied over and over again.
 
-Turing machine is very close but loses on the exploration of the []strings which is the only
-way to check the band.
+Turing machine beats it only if you allow Go to keep the for loop instead of re-creating it
+Otherwise, it loses 20% on the exploration of the []strings which is rewinding the band.
 
 **Results**
 
 ```
  goos: windows
  goarch: amd64
+ BenchmarkRPN_Turing_machine-4            2000000               774 ns/op
  BenchmarkRPN_emulating_stack-4           2000000               907 ns/op
- BenchmarkRPN_Turing_machine-4            1000000              1159 ns/op
- BenchmarkRPN_stack-4                     1000000              1709 ns/op
- BenchmarkRPN_operators_no_fields-4        500000              2719 ns/op
- BenchmarkRPN_operators_list-4             500000              3065 ns/op
- BenchmarkRPN-4                            500000              3713 ns/op
-
+ BenchmarkRPN_stack-4                     1000000              1693 ns/op
+ BenchmarkRPN_operators_no_fields-4        500000              2750 ns/op
+ BenchmarkRPN_operators_list-4             500000              3111 ns/op
+ BenchmarkRPN-4                            500000              3780 ns/op
+ 
 ```
 
  

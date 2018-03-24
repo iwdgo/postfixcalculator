@@ -23,52 +23,36 @@ An invalid sign is interpreted as a value and the next operation panics.
 func RPN_Turing_machine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	nops := len(words) //number of elements
-	numbers := make([]float64,len(words))
-	i := 0
-	num := 0.0
-	nop := 0
-	leftOp := 0.0
-	rightOp := 0.0
+	numbers := make([]float64,nops)
+	i,nop := 0,0
+	leftOp,rightOp := 0.0,0.0
 	for nop != nops - 1 { //length of expression stops processing
 		err = nil
 		for index, w := range words {
 			if strings.Contains(operatorsList, w) {//"?" is always skipped
+				//at least one operand exists
+				//no number can be used for detection so "num" is checked
+				//if word is ?, no number there, move before
+				//if word is num, already converted, read numbers
+				//otherwise attempt conversion
+				i = index - 1
+				for words[i] != "num" && i >= 0  {
+					if (words[i] == "?") {
+						i--
+					} else if words[i] != "num" {
+						numbers[i], err = strconv.ParseFloat(words[i], 64)
+						if err != nil {
+							panic("Invalid right operand")
+						}
+						words[i] = "num" //conversion done
+					}
+				}
 				//w is an operator and empty cells are skipped
 				if w == "sqrt" {
 					//unary operator
-					i = index - 1
-					//no num value can detect op is found
-					for words[i] != "num" && i >= 0 {
-						//if word is ?, no number there, move before
-						//if word is num, already converted, read numbers
-						//otherwise attempt conversion
-						if (words[i] == "?") {
-							i--
-						} else if words[i] == "num" {
-							num = numbers[i] //will be overridden
-						} else {
-							num, err = strconv.ParseFloat(words[i], 64)
-							if err != nil {
-								panic("Invalid sqrt operand")
-							}
-							words[i] = "num"
-						}
-					}
-					numbers[i] = math.Sqrt(num)
+					numbers[i] = math.Sqrt(numbers[i])
 				} else {
 					//binary operator
-					i = index - 1
-					for words[i] != "num" && i >= 0  {
-						if (words[i] == "?") {
-							i--
-						} else if words[i] != "num" {
-							numbers[i], err = strconv.ParseFloat(words[i], 64)
-							if err != nil {
-								panic("Invalid right operand")
-							}
-							words[i] = "num" //conversion done
-						}
-					}
 					rightOp = numbers[i]
 					words[i] = "?" //erasing value
 					//looking for the left operand which is to the left...
@@ -112,7 +96,8 @@ func RPN_Turing_machine(RPNInput string) float64 {
 				}
 				//restarting from the beginning of the expression by breaking operators for
 				words[index] = "?" //erasing operator as operation is completed
-				break
+				//break
+				index = 0 //re-starting without re-init for. No the cleanest
 			}
 		}
 		//counting remaining ops.
