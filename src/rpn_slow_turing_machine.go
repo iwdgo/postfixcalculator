@@ -18,14 +18,17 @@ A calculated value is marked as num which is reserved.
 
 An invalid sign is interpreted as a value and the next operation panics.
 
+Shorter code that the fast version as it is using a "while" format but slower the the Go for
+structure
 */
-func RPN_Turing_machine(RPNInput string) float64 {
+func RPN_slow_Turing_machine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	nops := len(words) //number of elements
 	numbers := make([]float64, nops)
-	i := 0
+	i, index := 0, 0
 	leftOp, rightOp := 0.0, 0.0
-	for index, w := range words {
+	for index < nops {
+		w := words[index]
 		if strings.Contains(operatorsList, w) { //"?" is always skipped
 			//at least one operand exists
 			//no number can be used for detection so "num" is checked
@@ -93,11 +96,15 @@ func RPN_Turing_machine(RPNInput string) float64 {
 			}
 			//restarting from the beginning of the expression by breaking operators for
 			words[index] = "?" //erasing operator as operation is completed
-			//break
-			index = 0 //re-starting without re-init for. No the cleanest
+			index = 0          //re-starting without re-init for. No the cleanest
+		} else {
+			index++
 		}
+
 	}
-	//counting remaining ops is not needed as the previous for loop stops only
-	//when words is fully explored and no operator is found
-	return numbers[0] //postfix final result can only end up there
+	/*counting remaining ops is not necessary. If you index goes above the size, you reached
+	the end of the band and the value is always in the first position for a valid
+	expression.
+	*/
+	return numbers[0]
 }
