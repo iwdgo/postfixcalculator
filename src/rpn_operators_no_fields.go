@@ -35,17 +35,14 @@ func RPN_operators_no_fields(RPNInput string) float64 {
 					if err != nil {
 						panic("Invalid value for sqrt")
 					}
-					num = math.Sqrt(num)
-					words[index-1] = strconv.FormatFloat(num, 'f', 10, 64)
+					words[index-1] = strconv.FormatFloat(math.Sqrt(num), 'f', 10, 64)
 					words = append(words[:index], words[index+1:]...) //removing sqrt
 				} else {
 					//binary operator
-					leftOp, err = strconv.ParseFloat(words[index-2], 64)
-					if err != nil {
+					if leftOp, err = strconv.ParseFloat(words[index-2], 64); err != nil {
 						panic("Invalid left operand")
 					}
-					rightOp, err = strconv.ParseFloat(words[index-1], 64)
-					if err != nil {
+					if rightOp, err = strconv.ParseFloat(words[index-1], 64); err != nil {
 						panic("Invalid right operand")
 					}
 

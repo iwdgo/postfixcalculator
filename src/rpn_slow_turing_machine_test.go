@@ -16,20 +16,14 @@ func ExampleRPN_slow_Turing_machineExp() {
 	// Output: 3.0001220703125
 }
 
-/* */
-
 func TestRPN_slow_Turing_machine(t *testing.T) {
-	actual := RPN_slow_Turing_machine(RPNInput)
-	if actual != 30 {
-		t.Errorf("RPN(%s): expected %d, actual %f", RPNInput, 30, actual)
+	if got := RPN_slow_Turing_machine(RPNInput); got != RPNInput_want {
+		t.Errorf("RPN(%s): got %f, want %f", RPNInput, got, RPNInput_want)
 	}
 }
 
-/*
-go test -bench=. allows to test the func
-*/
 func BenchmarkRPN_slow_Turing_machine(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		RPN_slow_Turing_machine(RPNInput)
+		RPN_slow_Turing_machine(input)
 	}
 }

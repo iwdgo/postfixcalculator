@@ -34,7 +34,7 @@ func returnStringResult(leftOp, rightOp float64, operatorU string) string {
 		}
 	case "^":
 		{
-			return strconv.FormatFloat(math.Pow(leftOp,rightOp), 'f', 13, 64)
+			return strconv.FormatFloat(math.Pow(leftOp, rightOp), 'f', 13, 64)
 		}
 	default:
 		panic("Invalid operator")
@@ -45,6 +45,7 @@ func returnStringResult(leftOp, rightOp float64, operatorU string) string {
 func RPN(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	index := 0
+	// Known vars are needed to hold values of strconv
 	num := 0.0
 	num2 := 0.0
 	for len(words) != 1 {
@@ -59,21 +60,18 @@ func RPN(RPNInput string) float64 {
 		index -= 1
 		if words[index] == "sqrt" {
 			//unary operator
-			num, err = strconv.ParseFloat(words[index-1], 64)
-			if err != nil {
+			if num, err = strconv.ParseFloat(words[index-1], 64); err != nil {
 				panic("Invalid value for sqrt")
 			}
-			num = math.Sqrt(num)
-			words[index-1] = strconv.FormatFloat(num, 'f', 10, 64)
+			// num = math.Sqrt(num)
+			words[index-1] = strconv.FormatFloat(math.Sqrt(num), 'f', 10, 64)
 			words = append(words[:index], words[index+1:]...) //removing sqrt
 		} else {
 			//binary operator
-			num, err = strconv.ParseFloat(words[index-2], 64)
-			if err != nil {
+			if num, err = strconv.ParseFloat(words[index-2], 64); err != nil {
 				panic("Invalid left operand")
 			}
-			num2, err = strconv.ParseFloat(words[index-1], 64)
-			if err != nil {
+			if num2, err = strconv.ParseFloat(words[index-1], 64); err != nil {
 				panic("Invalid right operand")
 			}
 			words[index-2] = returnStringResult(num, num2, words[index])

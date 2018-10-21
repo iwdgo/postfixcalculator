@@ -20,15 +20,11 @@ func ExampleRPN_stack_sqrt() {
 }
 
 func TestRPN_stack(t *testing.T) {
-	actual := RPN_stack(input)
-	if actual != 3.0001220703125 {
-		t.Errorf("RPN(%s): expected %f, actual %f", input, 3.0001220703125, actual)
+	if got := RPN_stack(RPNInput); got != RPNInput_want {
+		t.Errorf("RPN(%s): got %f, want %f", input, got, RPNInput_want)
 	}
 }
 
-/*
-go test -bench=. allows to test
-*/
 func BenchmarkRPN_stack(b *testing.B) {
 	// run the Fib function b.N times
 	for n := 0; n < b.N; n++ {

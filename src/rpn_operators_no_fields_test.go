@@ -16,20 +16,14 @@ func ExampleRPN_operators_no_fieldsExp() {
 	// Output: 3.0001220703125
 }
 
-/* */
-
 func TestRPN_operators_no_fields(t *testing.T) {
-	actual := RPN_operators_no_fields(RPNInput)
-	if actual != 30 {
-		t.Errorf("RPN(%s): expected %d, actual %f", RPNInput, 30, actual)
+	if got := RPN_operators_no_fields(RPNInput); got != RPNInput_want {
+		t.Errorf("RPN(%s): got %f, want %f", RPNInput, got, RPNInput_want)
 	}
 }
 
-/*
-go test -bench=. allows to test the func
-*/
 func BenchmarkRPN_operators_no_fields(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		RPN_operators_no_fields(RPNInput)
+		RPN_operators_no_fields(input)
 	}
 }

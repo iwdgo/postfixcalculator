@@ -26,27 +26,26 @@ func RPN_Turing_machine(RPNInput string) float64 {
 	i := 0
 	leftOp, rightOp := 0.0, 0.0
 	for index, w := range words {
-		if strings.Contains(operatorsList, w) { //"?" is always skipped
-			//at least one operand exists
-			//no number can be used for detection so "num" is checked
-			//if word is ?, no number there, move before
-			//if word is num, already converted, read numbers
-			//otherwise attempt conversion
+		if strings.Contains(operatorsList, w) { // "?" is always skipped
+			// at least one operand exists
+			// no number can be used for detection so "num" is checked
+			// if word is ?, no number there, move before
+			// if word is num, already converted, read numbers
+			// otherwise attempt conversion
 			i = index - 1
 			for words[i] != "num" && i >= 0 {
 				if words[i] == "?" {
 					i--
 				} else if words[i] != "num" {
-					numbers[i], err = strconv.ParseFloat(words[i], 64)
-					if err != nil {
+					if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 						panic("Invalid right operand")
 					}
 					words[i] = "num" //conversion done
 				}
 			}
-			//w is an operator and empty cells are skipped
+			// w is an operator and empty cells are skipped
 			if w == "sqrt" {
-				//unary operator
+				// unary operator
 				numbers[i] = math.Sqrt(numbers[i])
 			} else {
 				//binary operator
@@ -91,13 +90,13 @@ func RPN_Turing_machine(RPNInput string) float64 {
 					panic("Invalid operator : " + w)
 				}
 			}
-			//restarting from the beginning of the expression by breaking operators for
-			words[index] = "?" //erasing operator as operation is completed
-			//break
-			index = 0 //re-starting without re-init for. No the cleanest
+			// restarting from the beginning of the expression by breaking operators for
+			words[index] = "?" // erasing operator as operation is completed
+			// break was here
+			index = 0 // re-starting without re-init for. No the cleanest
 		}
 	}
-	//counting remaining ops is not needed as the previous for loop stops only
-	//when words is fully explored and no operator is found
-	return numbers[0] //postfix final result can only end up there
+	// counting remaining ops is not needed as the previous for loop stops only
+	// when words is fully explored and no operator is found
+	return numbers[0] // postfix final result can only end up there
 }

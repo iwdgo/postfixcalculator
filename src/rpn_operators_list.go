@@ -20,7 +20,6 @@ Removing subroutines has no visible impact here.
 An invalid sign is interpreted as a value and the next operation panics.
 
 */
-/* */
 func RPN_operators_list(RPNInput string) float64 {
 	operators := strings.Fields(operatorsList)
 	words := strings.Fields(RPNInput)
@@ -33,27 +32,23 @@ func RPN_operators_list(RPNInput string) float64 {
 		operationCompleted = false
 		for index, w := range words {
 			for _, op := range operators {
-				if w == op {//if an operator calculate otherwise keep searching
+				if w == op { //if an operator calculate otherwise keep searching
 					if w == "sqrt" {
 						//unary operator
-						num, err = strconv.ParseFloat(words[index-1], 64)
-						if err != nil {
+						if num, err = strconv.ParseFloat(words[index-1], 64); err != nil {
 							panic("Invalid value for sqrt")
 						}
-						num = math.Sqrt(num)
-						words[index-1] = strconv.FormatFloat(num, 'f', 10, 64)
+						// num = math.Sqrt(num)
+						words[index-1] = strconv.FormatFloat(math.Sqrt(num), 'f', 10, 64)
 						words = append(words[:index], words[index+1:]...) //removing sqrt
 					} else {
 						//binary operator
-						leftOp, err = strconv.ParseFloat(words[index-2], 64)
-						if err != nil {
+						if leftOp, err = strconv.ParseFloat(words[index-2], 64); err != nil {
 							panic("Invalid left operand")
 						}
-						rightOp, err = strconv.ParseFloat(words[index-1], 64)
-						if err != nil {
+						if rightOp, err = strconv.ParseFloat(words[index-1], 64); err != nil {
 							panic("Invalid right operand")
 						}
-
 						switch op {
 						case "+":
 							{
@@ -73,7 +68,7 @@ func RPN_operators_list(RPNInput string) float64 {
 							}
 						case "^":
 							{
-								words[index-2] = strconv.FormatFloat(math.Pow(leftOp,rightOp), 'f', 13, 64)
+								words[index-2] = strconv.FormatFloat(math.Pow(leftOp, rightOp), 'f', 13, 64)
 							}
 						default:
 							panic("Invalid operator")
