@@ -13,7 +13,7 @@ The original band in the words exploded in a slice and results are hold on the b
 The turing band has two copies one in string and one in float. This is mandatory to avoid
 multiple conversions.
 
-A treated operation or value is erased using ? which is reserved.
+A processed operation or value is erased using ? which is reserved.
 A calculated value is marked as num which is reserved.
 
 An invalid sign is interpreted as a value and the next operation panics.
@@ -21,10 +21,8 @@ An invalid sign is interpreted as a value and the next operation panics.
 */
 func RPN_Turing_machine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
-	nops := len(words) //number of elements
-	numbers := make([]float64, nops)
-	i := 0
-	leftOp, rightOp := 0.0, 0.0
+	numbers := make([]float64, len(words))
+	i, ro := 0, 0 // ro is the index of the right operand
 	for index, w := range words {
 		if strings.Contains(operatorsList, w) { // "?" is always skipped
 			// at least one operand exists
@@ -34,66 +32,64 @@ func RPN_Turing_machine(RPNInput string) float64 {
 			// otherwise attempt conversion
 			i = index - 1
 			for words[i] != "num" && i >= 0 {
-				if words[i] == "?" {
+				if words[i] == "?" { // former operator
 					i--
-				} else if words[i] != "num" {
+				} else if words[i] != "num" { // number not yet converted
 					if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 						panic("Invalid right operand")
 					}
-					words[i] = "num" //conversion done
-				}
+					words[i] = "num" // conversion done
+				} // else operand is found
 			}
 			// w is an operator and empty cells are skipped
 			if w == "sqrt" {
 				// unary operator
 				numbers[i] = math.Sqrt(numbers[i])
 			} else {
-				//binary operator
-				rightOp = numbers[i]
-				words[i] = "?" //erasing value
-				//looking for the left operand which is to the left...
+				// binary operator
+				ro = i
+				words[i] = "?" // erasing value in operation string
+				// looking for the left operand which is to the left...
 				i--
+				// You can't range from max to min of index
 				for words[i] != "num" && i >= 0 {
 					if words[i] == "?" {
 						i--
 					} else if words[i] != "num" {
-						numbers[i], err = strconv.ParseFloat(words[i], 64)
-						if err != nil {
+						if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 							panic("Invalid left operand")
 						}
-						words[i] = "num" //conversion done
+						words[i] = "num" // conversion done
 					}
 				}
-				leftOp = numbers[i] //cell not erased as it keeps result
 				switch w {
 				case "+":
 					{
-						numbers[i] = leftOp + rightOp
+						numbers[i] += numbers[ro]
 					}
 				case "-":
 					{
-						numbers[i] = leftOp - rightOp
+						numbers[i] -= numbers[ro]
 					}
 				case "*":
 					{
-						numbers[i] = leftOp * rightOp
+						numbers[i] *= numbers[ro]
 					}
 				case "/":
 					{
-						numbers[i] = leftOp / rightOp
+						numbers[i] /= numbers[ro]
 					}
 				case "^":
 					{
-						numbers[i] = math.Pow(leftOp, rightOp)
+						numbers[i] = math.Pow(numbers[i], numbers[ro])
 					}
 				default:
 					panic("Invalid operator : " + w)
 				}
 			}
-			// restarting from the beginning of the expression by breaking operators for
 			words[index] = "?" // erasing operator as operation is completed
 			// break was here
-			index = 0 // re-starting without re-init for. No the cleanest
+			index = 0 // re-starting without re-init for. Not the cleanest
 		}
 	}
 	// counting remaining ops is not needed as the previous for loop stops only
