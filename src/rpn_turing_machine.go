@@ -22,6 +22,7 @@ An invalid sign is interpreted as a value and the next operation panics.
 func RPN_Turing_machine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))
+	// Convertinc blindly is a mistake as it is very costly
 	i, ro := 0, 0 // ro is the index of the right operand
 	for index, w := range words {
 		if strings.Contains(operatorsList, w) { // "?" is always skipped
