@@ -23,7 +23,7 @@ func RPN_Turing_machine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))
 	// Convertinc blindly is a mistake as it is very costly
-	i, ro := 0, 0 // ro is the index of the right operand
+	i, ro := 0, 0.0 // ro is the index of the right operand
 	for index, w := range words {
 		if strings.Contains(operatorsList, w) { // "?" is always skipped
 			// at least one operand exists
@@ -35,10 +35,10 @@ func RPN_Turing_machine(RPNInput string) float64 {
 			for words[i] != "num" && i >= 0 {
 				if words[i] == "?" { // former operator
 					i--
-				} else if words[i] != "num" { // number not yet converted
-					if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-						panic("Invalid right operand")
-					}
+					// } else if words[i] != "num" { // number not yet converted
+				} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
+					panic("Invalid right operand")
+				} else {
 					words[i] = "num" // conversion done
 				} // else operand is found
 			}
@@ -48,41 +48,40 @@ func RPN_Turing_machine(RPNInput string) float64 {
 				numbers[i] = math.Sqrt(numbers[i])
 			} else {
 				// binary operator
-				ro = i
-				words[i] = "?" // erasing value in operation string
+				ro = numbers[i] // keep addressing has no value. So copying value
+				words[i] = "?"  // erasing value in operation string
 				// looking for the left operand which is to the left...
 				i--
 				// You can't range from max to min of index
 				for words[i] != "num" && i >= 0 {
 					if words[i] == "?" {
 						i--
-					} else if words[i] != "num" {
-						if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-							panic("Invalid left operand")
-						}
+					} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
+						panic("Invalid left operand")
+					} else {
 						words[i] = "num" // conversion done
 					}
 				}
 				switch w {
 				case "+":
 					{
-						numbers[i] += numbers[ro]
+						numbers[i] += ro
 					}
 				case "-":
 					{
-						numbers[i] -= numbers[ro]
+						numbers[i] -= ro
 					}
 				case "*":
 					{
-						numbers[i] *= numbers[ro]
+						numbers[i] *= ro
 					}
 				case "/":
 					{
-						numbers[i] /= numbers[ro]
+						numbers[i] /= ro
 					}
 				case "^":
 					{
-						numbers[i] = math.Pow(numbers[i], numbers[ro])
+						numbers[i] = math.Pow(numbers[i], ro)
 					}
 				default:
 					panic("Invalid operator : " + w)

@@ -53,8 +53,8 @@ the compilation of the for loop using range. Exiting a for loop without finishin
 ```
 go version go1.11.1 windows/amd64
 
-BenchmarkRPN_emulating_stack-4           2000000               947 ns/op
-BenchmarkRPN_Turing_machine-4            1000000              1039 ns/op
+BenchmarkRPN_emulating_stack-4           2000000               928 ns/op
+BenchmarkRPN_Turing_machine-4            1000000              1017 ns/op
 BenchmarkRPN_stack-4                     1000000              1813 ns/op
 BenchmarkRPN_slow_Turing_machine-4       1000000              1978 ns/op
 BenchmarkRPN_operators_no_fields-4        500000              3683 ns/op
