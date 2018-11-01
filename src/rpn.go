@@ -17,25 +17,15 @@ failing if the expression is invalid.
 func returnStringResult(leftOp, rightOp float64, operatorU string) string {
 	switch operatorU {
 	case "+":
-		{
-			return strconv.FormatFloat(leftOp+rightOp, 'f', 13, 64)
-		}
+		return strconv.FormatFloat(leftOp+rightOp, 'f', 13, 64)
 	case "-":
-		{
-			return strconv.FormatFloat(leftOp-rightOp, 'f', 13, 64)
-		}
+		return strconv.FormatFloat(leftOp-rightOp, 'f', 13, 64)
 	case "*":
-		{
-			return strconv.FormatFloat(leftOp*rightOp, 'f', 13, 64)
-		}
+		return strconv.FormatFloat(leftOp*rightOp, 'f', 13, 64)
 	case "/":
-		{
-			return strconv.FormatFloat(leftOp/rightOp, 'f', 13, 64)
-		}
+		return strconv.FormatFloat(leftOp/rightOp, 'f', 13, 64)
 	case "^":
-		{
-			return strconv.FormatFloat(math.Pow(leftOp, rightOp), 'f', 13, 64)
-		}
+		return strconv.FormatFloat(math.Pow(leftOp, rightOp), 'f', 13, 64)
 	default:
 		panic("Invalid operator")
 	}

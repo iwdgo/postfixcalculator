@@ -51,25 +51,15 @@ func RPN_operators_list(RPNInput string) float64 {
 						}
 						switch op {
 						case "+":
-							{
-								words[index-2] = strconv.FormatFloat(leftOp+rightOp, 'f', 13, 64)
-							}
+							words[index-2] = strconv.FormatFloat(leftOp+rightOp, 'f', 13, 64)
 						case "-":
-							{
-								words[index-2] = strconv.FormatFloat(leftOp-rightOp, 'f', 13, 64)
-							}
+							words[index-2] = strconv.FormatFloat(leftOp-rightOp, 'f', 13, 64)
 						case "*":
-							{
-								words[index-2] = strconv.FormatFloat(leftOp*rightOp, 'f', 13, 64)
-							}
+							words[index-2] = strconv.FormatFloat(leftOp*rightOp, 'f', 13, 64)
 						case "/":
-							{
-								words[index-2] = strconv.FormatFloat(leftOp/rightOp, 'f', 13, 64)
-							}
+							words[index-2] = strconv.FormatFloat(leftOp/rightOp, 'f', 13, 64)
 						case "^":
-							{
-								words[index-2] = strconv.FormatFloat(math.Pow(leftOp, rightOp), 'f', 13, 64)
-							}
+							words[index-2] = strconv.FormatFloat(math.Pow(leftOp, rightOp), 'f', 13, 64)
 						default:
 							panic("Invalid operator")
 						}

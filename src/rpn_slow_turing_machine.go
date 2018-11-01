@@ -23,11 +23,10 @@ structure
 */
 func RPN_slow_Turing_machine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
-	nops := len(words) //number of elements
-	numbers := make([]float64, nops)
+	numbers := make([]float64, len(words))
 	i, index := 0, 0
 	leftOp, rightOp := 0.0, 0.0
-	for index < nops {
+	for index < len(words) {
 		w := words[index]
 		if strings.Contains(operatorsList, w) { //"?" is always skipped
 			//at least one operand exists
@@ -71,25 +70,15 @@ func RPN_slow_Turing_machine(RPNInput string) float64 {
 				leftOp = numbers[i] //cell not erased as it keeps result
 				switch w {
 				case "+":
-					{
-						numbers[i] = leftOp + rightOp
-					}
+					numbers[i] = leftOp + rightOp
 				case "-":
-					{
-						numbers[i] = leftOp - rightOp
-					}
+					numbers[i] = leftOp - rightOp
 				case "*":
-					{
-						numbers[i] = leftOp * rightOp
-					}
+					numbers[i] = leftOp * rightOp
 				case "/":
-					{
-						numbers[i] = leftOp / rightOp
-					}
+					numbers[i] = leftOp / rightOp
 				case "^":
-					{
-						numbers[i] = math.Pow(leftOp, rightOp)
-					}
+					numbers[i] = math.Pow(leftOp, rightOp)
 				default:
 					panic("Invalid operator : " + w)
 				}

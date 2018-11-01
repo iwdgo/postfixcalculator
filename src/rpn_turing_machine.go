@@ -64,25 +64,15 @@ func RPN_Turing_machine(RPNInput string) float64 {
 				}
 				switch w {
 				case "+":
-					{
-						numbers[i] += ro
-					}
+					numbers[i] += ro
 				case "-":
-					{
-						numbers[i] -= ro
-					}
+					numbers[i] -= ro
 				case "*":
-					{
-						numbers[i] *= ro
-					}
+					numbers[i] *= ro
 				case "/":
-					{
-						numbers[i] /= ro
-					}
+					numbers[i] /= ro
 				case "^":
-					{
-						numbers[i] = math.Pow(numbers[i], ro)
-					}
+					numbers[i] = math.Pow(numbers[i], ro)
 				default:
 					panic("Invalid operator : " + w)
 				}
