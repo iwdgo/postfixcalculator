@@ -51,15 +51,15 @@ the compilation of the for loop using range. Exiting a for loop without finishin
 
 **Results**
 ```
-go version go1.11.1 windows/amd64
+go version go1.11.2 windows/amd64
 
-BenchmarkRPN_emulating_stack-4           2000000               928 ns/op
-BenchmarkRPN_Turing_machine-4            1000000              1017 ns/op
-BenchmarkRPN_stack-4                     1000000              1813 ns/op
-BenchmarkRPN_slow_Turing_machine-4       1000000              1978 ns/op
-BenchmarkRPN_operators_no_fields-4        500000              3683 ns/op
-BenchmarkRPN_operators_list-4             300000              4327 ns/op
-BenchmarkRPN-4                            300000              5270 ns/op
+BenchmarkRPN_emulating_stack-4           2000000               945 ns/op
+BenchmarkRPN_Turing_machine-4            1000000              1020 ns/op
+BenchmarkRPN_stack-4                     1000000              1811 ns/op
+BenchmarkRPN_slow_Turing_machine-4       1000000              2203 ns/op
+BenchmarkRPN_operators_no_fields-4        500000              3643 ns/op
+BenchmarkRPN_operators_list-4             300000              4260 ns/op
+BenchmarkRPN-4                            300000              5248 ns/op
 
 ```
 
