@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"math"
@@ -7,21 +7,18 @@ import (
 )
 
 /*
-
-Returns the result of a string in reverse polish notation (postfix) by using a turing machine.
+RPNSlowTuringMachine returns the result of a string in reverse polish notation (postfix) using a Turing machine.
 The original band in the words exploded in a slice and results are hold on the band but in num form.
-The turing band has two copies one in string and one in float. This is mandatory to avoid
-multiple conversions.
+The band has two copies one in string and one in float. This is mandatory to avoid costly conversions.
 
-A treated operation or value is erased using ? which is reserved.
-A calculated value is marked as num which is reserved.
+A processed operation or value is erased by replacing it with ? which is a reserved sign.
+A calculated value is marked as num which is also a reserved word.
 
 An invalid sign is interpreted as a value and the next operation panics.
 
-Shorter code that the fast version as it is using a "while" format but slower the the Go for
-structure
+Shorter code that the fast version as it is using a "while" format but slower than the Go for structure.
 */
-func RPN_slow_Turing_machine(RPNInput string) float64 {
+func RPNSlowTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))
 	i, index := 0, 0

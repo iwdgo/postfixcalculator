@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"github.com/golang-collections/collections/stack"
@@ -7,11 +7,9 @@ import (
 	"strings"
 )
 
-/* Prints the result of a string in reverse polish notation (postfix) using stack package
-from collections.
-*/
-
-func RPN_stack(input string) float64 {
+// RPNStack prints the result of a string in reverse polish notation (postfix) using stack package
+// from collections.
+func RPNStack(input string) float64 {
 	num := 0.0
 	stackOperands := stack.Stack{} //= stack.New()
 	for _, tok := range strings.Fields(input) {

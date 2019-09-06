@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"math"
@@ -7,8 +7,7 @@ import (
 )
 
 /*
-
-Returns the result of a string in reverse polish notation (postfix) by exploding the string
+RPNOperatorsList returns the result of a string in reverse polish notation (postfix) by exploding the string
 to a slice and editing the slice by replacing each op by its result until only a number is left or
 failing if the expression is invalid.
 
@@ -18,23 +17,22 @@ is lowering efficiency. A list of authorized operators is kept to find the fist 
 Removing subroutines has no visible impact here.
 
 An invalid sign is interpreted as a value and the next operation panics.
-
 */
-func RPN_operators_list(RPNInput string) float64 {
+func RPNOperatorsList(RPNInput string) float64 {
 	operators := strings.Fields(operatorsList)
 	words := strings.Fields(RPNInput)
 	num := 0.0
 	leftOp := 0.0
 	rightOp := 0.0
 	operationCompleted := false
-	for len(words) != 1 { //length of expression stops processing
+	for len(words) != 1 { // length of expression stops processing
 		err = nil
 		operationCompleted = false
 		for index, w := range words {
 			for _, op := range operators {
-				if w == op { //if an operator calculate otherwise keep searching
+				if w == op { // if an operator is found, calculate value otherwise keep searching.
 					if w == "sqrt" {
-						//unary operator
+						// unary operator
 						if num, err = strconv.ParseFloat(words[index-1], 64); err != nil {
 							panic("Invalid value for sqrt")
 						}
@@ -64,10 +62,10 @@ func RPN_operators_list(RPNInput string) float64 {
 							panic("Invalid operator")
 						}
 
-						/* removing binary operator by removing the slice until the item after the result */
+						// removing binary operator by removing the slice until the item after the result.
 						words = append(words[:index-1], words[index+1:]...)
 					}
-					//restarting from the beginning of the expression by breaking operators for
+					// restarting from the beginning of the expression by breaking both loops
 					operationCompleted = true
 					break
 				}

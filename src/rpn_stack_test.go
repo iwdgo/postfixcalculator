@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"fmt"
@@ -9,25 +9,25 @@ import (
 Running exemples where fmt is needed to check output.
 
 */
-func ExampleRPN_stack() {
-	fmt.Printf("%.13f", RPN_stack(input))
+func ExampleRPNStack() {
+	fmt.Printf("%.13f", RPNStack(input))
 	// Output: 3.0001220703125
 }
 
-func ExampleRPN_stack_sqrt() {
-	fmt.Printf("%f", RPN_stack(RPNInput))
+func ExampleRPNStack_sqrt() {
+	fmt.Printf("%f", RPNStack(RPNInput))
 	// Output: 30.000000
 }
 
-func TestRPN_stack(t *testing.T) {
-	if got := RPN_stack(RPNInput); got != RPNInput_want {
-		t.Errorf("RPN(%s): got %f, want %f", input, got, RPNInput_want)
+func TestRPNStack(t *testing.T) {
+	if got := RPNStack(RPNInput); got != RPNInputWant {
+		t.Errorf("RPN(%s): got %f, want %f", input, got, RPNInputWant)
 	}
 }
 
-func BenchmarkRPN_stack(b *testing.B) {
+func BenchmarkRPNStack(b *testing.B) {
 	// run the Fib function b.N times
 	for n := 0; n < b.N; n++ {
-		RPN_stack(input)
+		RPNStack(input)
 	}
 }

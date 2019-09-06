@@ -1,6 +1,7 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/iwdgo/postfixcalculator)](https://goreportcard.com/report/github.com/iwdgo/postfixcalculator)
 # Reverse Polish Notation calculator
 
-Several solution to this well-known problem show dramatic differences depending on the approach.
+Several solutions to this well-known problem show dramatic differences depending on the approach.
 A Turing machine emulation beats all of them.
 
 ***Features***
@@ -11,7 +12,7 @@ All solutions support :
 - binary operator ^ (exponent)
 - unary operator sqrt
 
-Input is a string. Panic on invalid values and operators
+Input is a string. Process panics on invalid values and operators.
 
 ***Solutions***
 
@@ -26,7 +27,7 @@ Input is a string. Panic on invalid values and operators
 ***How to run***
 
 You can run examples and tests using `src>go test`.
-To run benchmarks with `src>go test bench=."`
+To run benchmarks with `src>go test -bench=.`
 
 ***Results***
 
@@ -38,7 +39,7 @@ To run benchmarks with `src>go test bench=."`
 Slice is the underlying type of string. So string editing won't change anything and might be
 worse as a string is read-only and might be copied over and over again.
 
-Benchmarking is done on a calculation where floats appear.
+Benchmarking is done on a calculation using floats.
 
 ***Optimum***
 
@@ -51,15 +52,15 @@ the compilation of the for loop using range. Exiting a for loop without finishin
 
 **Results**
 ```
-go version go1.11.2 windows/amd64
+go version go1.13 windows/amd64
 
-BenchmarkRPN_emulating_stack-4           2000000               945 ns/op
-BenchmarkRPN_Turing_machine-4            1000000              1020 ns/op
-BenchmarkRPN_stack-4                     1000000              1811 ns/op
-BenchmarkRPN_slow_Turing_machine-4       1000000              2203 ns/op
-BenchmarkRPN_operators_no_fields-4        500000              3643 ns/op
-BenchmarkRPN_operators_list-4             300000              4260 ns/op
-BenchmarkRPN-4                            300000              5248 ns/op
+BenchmarkRPNEmulatingStack-4           1000000              1093 ns/op
+BenchmarkRPNTuringMachine-4            1000000              1095 ns/op
+BenchmarkRPNSlowTuringMachine-4        649212              1858 ns/op
+BenchmarkRPNStack-4                      600396              1974 ns/op
+BenchmarkRPN_operators_no_fields-4        285874              4034 ns/op
+BenchmarkRPNOperatorsList-4             235432              4801 ns/op
+BenchmarkRPN-4                            192178              6241 ns/op
 
 ```
 

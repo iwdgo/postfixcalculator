@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"math"
@@ -7,31 +7,10 @@ import (
 )
 
 /*
-
-Returns the result of a string in reverse polish notation (postfix) by exploding the string
+RPN returns the result of an expression using reverse polish notation (postfix) by exploding the string
 to a slice and editing the slice by replacing each op by its result until only a number is left or
 failing if the expression is invalid.
-
 */
-
-func returnStringResult(leftOp, rightOp float64, operatorU string) string {
-	switch operatorU {
-	case "+":
-		return strconv.FormatFloat(leftOp+rightOp, 'f', 13, 64)
-	case "-":
-		return strconv.FormatFloat(leftOp-rightOp, 'f', 13, 64)
-	case "*":
-		return strconv.FormatFloat(leftOp*rightOp, 'f', 13, 64)
-	case "/":
-		return strconv.FormatFloat(leftOp/rightOp, 'f', 13, 64)
-	case "^":
-		return strconv.FormatFloat(math.Pow(leftOp, rightOp), 'f', 13, 64)
-	default:
-		panic("Invalid operator")
-	}
-}
-
-/* */
 func RPN(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	index := 0
@@ -71,4 +50,21 @@ func RPN(RPNInput string) float64 {
 	}
 	num, _ = strconv.ParseFloat(words[0], 64)
 	return num
+}
+
+func returnStringResult(leftOp, rightOp float64, operatorU string) string {
+	switch operatorU {
+	case "+":
+		return strconv.FormatFloat(leftOp+rightOp, 'f', 13, 64)
+	case "-":
+		return strconv.FormatFloat(leftOp-rightOp, 'f', 13, 64)
+	case "*":
+		return strconv.FormatFloat(leftOp*rightOp, 'f', 13, 64)
+	case "/":
+		return strconv.FormatFloat(leftOp/rightOp, 'f', 13, 64)
+	case "^":
+		return strconv.FormatFloat(math.Pow(leftOp, rightOp), 'f', 13, 64)
+	default:
+		panic("Invalid operator")
+	}
 }

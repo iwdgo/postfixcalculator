@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"fmt"
@@ -17,8 +17,8 @@ func ExampleRPN_operators_no_fieldsExp() {
 }
 
 func TestRPN_operators_no_fields(t *testing.T) {
-	if got := RPN_operators_no_fields(RPNInput); got != RPNInput_want {
-		t.Errorf("RPN(%s): got %f, want %f", RPNInput, got, RPNInput_want)
+	if got := RPN_operators_no_fields(RPNInput); got != RPNInputWant {
+		t.Errorf("RPN(%s): got %f, want %f", RPNInput, got, RPNInputWant)
 	}
 }
 

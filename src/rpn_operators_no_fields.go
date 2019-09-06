@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"math"

@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"fmt"
@@ -6,24 +6,24 @@ import (
 )
 
 /* if fmt.Print has an output (debug mode) */
-func ExampleRPN_operators_list() {
-	fmt.Printf("%f", RPN_operators_list(RPNInput))
+func ExampleRPNOperatorsList() {
+	fmt.Printf("%f", RPNOperatorsList(RPNInput))
 	// Output: 30.000000
 }
 
-func ExampleRPN_operators_listExp() {
-	fmt.Printf("%.13f", RPN_operators_list(input))
+func ExampleRPNOperatorsListExp() {
+	fmt.Printf("%.13f", RPNOperatorsList(input))
 	// Output: 3.0001220703125
 }
 
-func TestRPN_operators_list(t *testing.T) {
-	if got := RPN_operators_list(RPNInput); got != RPNInput_want {
-		t.Errorf("RPN(%s): got %f, want %f", RPNInput, got, RPNInput_want)
+func TestRPNOperatorsList(t *testing.T) {
+	if got := RPNOperatorsList(RPNInput); got != RPNInputWant {
+		t.Errorf("RPN(%s): got %f, want %f", RPNInput, got, RPNInputWant)
 	}
 }
 
-func BenchmarkRPN_operators_list(b *testing.B) {
+func BenchmarkRPNOperatorsList(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		RPN_operators_list(input)
+		RPNOperatorsList(input)
 	}
 }

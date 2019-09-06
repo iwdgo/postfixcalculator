@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"fmt"
@@ -6,24 +6,24 @@ import (
 )
 
 /* if fmt.Print has an output (debug mode) */
-func ExampleRPN_slow_Turing_machine() {
-	fmt.Printf("%f", RPN_slow_Turing_machine(RPNInput))
+func ExampleRPNSlowTuringMachine() {
+	fmt.Printf("%f", RPNSlowTuringMachine(RPNInput))
 	// Output: 30.000000
 }
 
-func ExampleRPN_slow_Turing_machineExp() {
-	fmt.Printf("%.13f", RPN_slow_Turing_machine(input))
+func ExampleRPNSlowTuringMachineExp() {
+	fmt.Printf("%.13f", RPNSlowTuringMachine(input))
 	// Output: 3.0001220703125
 }
 
-func TestRPN_slow_Turing_machine(t *testing.T) {
-	if got := RPN_slow_Turing_machine(RPNInput); got != RPNInput_want {
-		t.Errorf("RPN(%s): got %f, want %f", RPNInput, got, RPNInput_want)
+func TestRPNSlowTuringMachine(t *testing.T) {
+	if got := RPNSlowTuringMachine(RPNInput); got != RPNInputWant {
+		t.Errorf("RPN(%s): got %f, want %f", RPNInput, got, RPNInputWant)
 	}
 }
 
-func BenchmarkRPN_slow_Turing_machine(b *testing.B) {
+func BenchmarkRPNSlowTuringMachine(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		RPN_slow_Turing_machine(input)
+		RPNSlowTuringMachine(input)
 	}
 }

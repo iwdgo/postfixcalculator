@@ -1,4 +1,4 @@
-package RPN
+package rpn
 
 import (
 	"fmt"
@@ -17,8 +17,8 @@ func ExampleRPNExp() {
 }
 
 func TestRPN(t *testing.T) {
-	if got := RPN(RPNInput); got != RPNInput_want {
-		t.Errorf("RPN(%s): got %f, want %f", input, got, RPNInput_want)
+	if got := RPN(RPNInput); got != RPNInputWant {
+		t.Errorf("RPN(%s): got %f, want %f", input, got, RPNInputWant)
 	}
 
 }
