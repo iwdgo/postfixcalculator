@@ -1,17 +1,18 @@
-package rpn
+// RPNStack prints the result of a string in reverse polish notation (postfix) using stack package
+// from collections.
+package stack
 
 import (
-	"github.com/golang-collections/collections/stack"
+	"github.com/badgerodon/collections/stack"
 	"math"
 	"strconv"
 	"strings"
 )
 
-// RPNStack prints the result of a string in reverse polish notation (postfix) using stack package
-// from collections.
 func RPNStack(input string) float64 {
 	num := 0.0
 	stackOperands := stack.Stack{} //= stack.New()
+	var err error
 	for _, tok := range strings.Fields(input) {
 		switch tok {
 		case "+":

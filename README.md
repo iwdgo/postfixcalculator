@@ -1,4 +1,7 @@
+[![GoDoc](https://godoc.org/github.com/iWdGo/postfixcalculator?status.svg)](https://godoc.org/github.com/iWdGo/postfixcalculator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/iwdgo/postfixcalculator)](https://goreportcard.com/report/github.com/iwdgo/postfixcalculator)
+[![codecov](https://codecov.io/gh/iWdGo/postfixcalculator/branch/master/graph/badge.svg)](https://codecov.io/gh/iWdGo/postfixcalculator)
+
 # Reverse Polish Notation calculator
 
 Several solutions to this well-known problem show dramatic differences depending on the approach.

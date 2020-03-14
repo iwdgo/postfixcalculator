@@ -1,14 +1,4 @@
-package rpn
-
-import (
-	"math"
-	"strconv"
-	"strings"
-)
-
-/*
-
-Returns the result of a string in reverse polish notation (postfix) by exploding the string
+/* Returns the result of a string in reverse polish notation (postfix) by exploding the string
 to a slice and editing the slice by replacing each op by its result until only a number is left or
 failing if the expression is invalid.
 
@@ -16,18 +6,25 @@ Searching the operators list as the constant string using the strings. package
 It removes breaking a second loop without major improvement.
 
 An invalid sign is interpreted as a value and the next operation panics.
-
 */
-/* */
-func RPN_operators_no_fields(RPNInput string) float64 {
+package operatorsnofields
+
+import (
+	values "github.com/iwdgo/postfixcalculator/common"
+	"math"
+	"strconv"
+	"strings"
+)
+
+func RPNOperatorsNoFields(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	num := 0.0
 	leftOp := 0.0
 	rightOp := 0.0
+	var err error
 	for len(words) != 1 { //length of expression stops processing
-		err = nil
 		for index, w := range words {
-			if strings.Contains(operatorsList, w) {
+			if strings.Contains(values.OperatorsList, w) {
 				//w is an operator
 				if w == "sqrt" {
 					//unary operator

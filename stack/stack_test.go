@@ -1,6 +1,7 @@
-package rpn
+package stack
 
 import (
+	values "github.com/iwdgo/postfixcalculator/common"
 	"fmt"
 	"testing"
 )
@@ -10,24 +11,24 @@ Running exemples where fmt is needed to check output.
 
 */
 func ExampleRPNStack() {
-	fmt.Printf("%.13f", RPNStack(input))
+	fmt.Printf("%.13f", RPNStack(values.Input))
 	// Output: 3.0001220703125
 }
 
 func ExampleRPNStack_sqrt() {
-	fmt.Printf("%f", RPNStack(RPNInput))
+	fmt.Printf("%f", RPNStack(values.RPNInput))
 	// Output: 30.000000
 }
 
 func TestRPNStack(t *testing.T) {
-	if got := RPNStack(RPNInput); got != RPNInputWant {
-		t.Errorf("RPN(%s): got %f, want %f", input, got, RPNInputWant)
+	if got := RPNStack(values.RPNInput); got != values.RPNInputWant {
+		t.Errorf("RPN(%s): got %f, want %f", values.Input, got, values.RPNInputWant)
 	}
 }
 
 func BenchmarkRPNStack(b *testing.B) {
 	// run the Fib function b.N times
 	for n := 0; n < b.N; n++ {
-		RPNStack(input)
+		RPNStack(values.Input)
 	}
 }

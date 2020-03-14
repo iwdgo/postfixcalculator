@@ -1,13 +1,4 @@
-package rpn
-
-import (
-	"math"
-	"strconv"
-	"strings"
-)
-
-/*
-RPNTuringMachine returns the result of a string in reverse polish notation (postfix) by using a turing machine.
+/* RPNTuringMachine returns the result of a string in reverse polish notation (postfix) by using a turing machine.
 The original band in the words exploded in a slice and results are hold on the band but in num form.
 The turing band has two copies one in string and one in float. This is mandatory to avoid
 multiple conversions.
@@ -17,13 +8,23 @@ A calculated value is marked as num which is reserved.
 
 An invalid sign is interpreted as a value and the next operation panics.
 */
+package turingmachine
+
+import (
+	values "github.com/iwdgo/postfixcalculator/common"
+	"math"
+	"strconv"
+	"strings"
+)
+
 func RPNTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))
 	// Converting blindly is a mistake as it is very costly
 	i, ro := 0, 0.0 // ro is the index of the right operand
+	var err error
 	for index, w := range words {
-		if strings.Contains(operatorsList, w) { // "?" is always skipped
+		if strings.Contains(values.OperatorsList, w) { // "?" is always skipped
 			// at least one operand exists
 			// no number can be used for detection so "num" is checked
 			// if word is ?, no number there, move before

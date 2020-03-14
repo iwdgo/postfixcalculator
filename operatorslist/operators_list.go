@@ -1,13 +1,4 @@
-package rpn
-
-import (
-	"math"
-	"strconv"
-	"strings"
-)
-
-/*
-RPNOperatorsList returns the result of a string in reverse polish notation (postfix) by exploding the string
+/* RPNOperatorsList returns the result of a string in reverse polish notation (postfix) by exploding the string
 to a slice and editing the slice by replacing each op by its result until only a number is left or
 failing if the expression is invalid.
 
@@ -18,12 +9,20 @@ Removing subroutines has no visible impact here.
 
 An invalid sign is interpreted as a value and the next operation panics.
 */
+package operatorslist
+
+import (
+	values "github.com/iwdgo/postfixcalculator/common"
+	"math"
+	"strconv"
+	"strings"
+)
+
 func RPNOperatorsList(RPNInput string) float64 {
-	operators := strings.Fields(operatorsList)
+	operators := strings.Fields(values.OperatorsList)
 	words := strings.Fields(RPNInput)
-	num := 0.0
-	leftOp := 0.0
-	rightOp := 0.0
+	num, leftOp, rightOp := 0.0, 0.0, 0.0
+	var err error
 	operationCompleted := false
 	for len(words) != 1 { // length of expression stops processing
 		err = nil
