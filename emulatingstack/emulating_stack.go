@@ -1,4 +1,6 @@
-/* Original is from http://rosettacode.org/wiki/Parsing/RPN_calculator_algorithm#Go where a example of
+/* Package emulatingstack implements postfix calculator by emulating a stack.
+
+Original is from http://rosettacode.org/wiki/Parsing/RPN_calculator_algorithm#Go where a example of
 a printed output can be found. This version contains minor changes for this test.
 
 This emulation is not using a stack in the strict sense as the structure is accessed sequentially

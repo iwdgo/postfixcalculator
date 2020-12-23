@@ -1,4 +1,6 @@
-/* RPNOperatorsList returns the result of a string in reverse polish notation (postfix) by exploding the string
+/* Package operatorslist implements postfix calculator using a list of operators.
+
+RPNOperatorsList returns the result of a string in reverse polish notation (postfix) by exploding the string
 to a slice and editing the slice by replacing each op by its result until only a number is left or
 failing if the expression is invalid.
 

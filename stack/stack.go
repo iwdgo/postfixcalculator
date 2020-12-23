@@ -1,5 +1,9 @@
-// RPNStack prints the result of a string in reverse polish notation (postfix) using stack package
-// from collections.
+/* Package stack implements postfix calculator using a stack package.
+
+RPNStack prints the result of a string in reverse polish notation (postfix) using stack package
+collections.
+
+*/
 package stack
 
 import (

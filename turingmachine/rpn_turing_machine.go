@@ -1,4 +1,6 @@
-/* RPNTuringMachine returns the result of a string in reverse polish notation (postfix) by using a turing machine.
+/* Package turingmachine implements postfix calculator using a Turing machine.
+
+RPNTuringMachine returns the result of a string in reverse polish notation (postfix) by using a turing machine.
 The original band in the words exploded in a slice and results are hold on the band but in num form.
 The turing band has two copies one in string and one in float. This is mandatory to avoid
 multiple conversions.

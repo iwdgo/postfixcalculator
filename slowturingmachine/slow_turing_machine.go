@@ -1,5 +1,7 @@
-/* RPNSlowTuringMachine returns the result of a string in reverse polish notation (postfix) using a Turing machine.
-The original band in the words exploded in a slice and results are hold on the band but in num form.
+/* Package slowturingmachine implements postfix calculator using a Turing machine.
+
+RPNSlowTuringMachine returns the result of a string in reverse polish notation (postfix) using a Turing machine.
+The original band in the words exploded in a slice and results are held on the band but in num form.
 The band has two copies one in string and one in float. This is mandatory to avoid costly conversions.
 
 A processed operation or value is erased by replacing it with ? which is a reserved sign.
