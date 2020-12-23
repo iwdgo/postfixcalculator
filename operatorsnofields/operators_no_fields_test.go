@@ -1,8 +1,8 @@
 package operatorsnofields
 
 import (
-	values "github.com/iwdgo/postfixcalculator/common"
 	"fmt"
+	values "github.com/iwdgo/postfixcalculator/common"
 	"testing"
 )
 
