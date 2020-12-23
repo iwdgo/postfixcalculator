@@ -14,8 +14,7 @@ func RPN(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	index := 0
 	// Known vars are needed to hold values of strconv
-	num := 0.0
-	num2 := 0.0
+	var num, num2 float64
 	var err error
 	for len(words) != 1 {
 		//index = findFirstOperator(words)
