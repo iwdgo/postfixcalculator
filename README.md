@@ -7,7 +7,7 @@
 Several solutions to this well-known problem show dramatic differences depending on the approach.
 A Turing machine emulation beats all of them.
 
-***Features***
+## Features
 
 All solutions support :
 - float numbers
@@ -17,43 +17,45 @@ All solutions support :
 
 Input is a string. Process panics on invalid values and operators.
 
-***Solutions***
+## Solutions
 
-- slice editing (RPN) using [stack package](https://godoc.org/github.com/golang-collections/collections/stack)
-  requires to `go get github.com/golang-collections/collections/stack`
-- emulating stack using the slice (RPN emulating stack)
-- using a stack-like struct (RPN stack)
-- using an operators list as a string (RPN operators list)
-- using the same operators list and the string package (RPN operators no fields)
-- emulating a turing machine (rpn (slow) Turing machine)
+- [slice editing](https://pkg.go.dev/github.com/iwdgo/stack)
+- [emulating stack using the slice](https://pkg.go.dev/github.com/iwdgo/emulatingstack)
+- [using a stack-like struct](https://pkg.go.dev/github.com/iwdgo/emulatingstack)
+- [using string to hold a list of operators in two loops](https://pkg.go.dev/github.com/iwdgo/operatorslist)
+- [using string to hold a list of operators in one loop](https://pkg.go.dev/github.com/operatorsnofields)
+- Turing machine:
+  - [slow](https://pkg.go.dev/github.com/iwdgo/slowturingmachine)
+  - [fast](https://pkg.go.dev/github.com/iwdgo/turingmachine)
 
-***How to run***
+## How to
 
-You can run examples and tests using `src>go test`.
-To run benchmarks with `src>go test -bench=.`
+To run tests: `>go test ./...`
+To run benchmarks `>go test -bench=. ./...`
 
-***Results***
+## Results
 
 - Emulating the stack is the most efficient classic method.
-- Using a `struct` in a provided Go Doc package is already costly by a factor of 2.
-- As soon as you add slice editing, you divide performance by 3.
-- The worst being to hold all elements of the expression in one slice.
+- Using a `struct` from an existing package is already costly by a factor of 2.
+- Adding slice editing slows performance by a factor of 3.
+- The worst occurs when all elements of the expression are in one slice.
 
 Slice is the underlying type of string. So string editing won't change anything and might be
-worse as a string is read-only and might be copied over and over again.
+worse as a string is read-only and is copied many times.
+
+## Optimum
+
+Turing machine nears the stack emulation only if you allow Go to keep the for loop instead of re-creating it.
+Performance degrades dramatically when using a "while" form with increment inside the loop to follow usual
+pracice or if the `for` loop is re-created. 
+
+The key is to explore []strings efficiently, i.e. rewinding the band. The key element is 
+the compilation of the for loop using range. Exiting a `for` loop without finishing is also costly.
+
+## Benchmark
 
 Benchmarking is done on a calculation using floats.
 
-***Optimum***
-
-Turing machine nears the stack emulation only if you allow Go to keep the for loop instead of re-creating it.
-If you use a "while" form with increment inside the loop to follow general rules or if you exit
-the for loop to re-create it, performance is dramatically degraded. 
-
-The key is to explore []strings efficiently, i.e. rewinding the band. The key element is 
-the compilation of the for loop using range. Exiting a for loop without finishing is costly.
-
-**Results**
 ```
 go version go1.13 windows/amd64
 

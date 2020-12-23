@@ -1,16 +1,5 @@
-/* Package operatorslist implements postfix calculator using a list of operators.
-
-RPNOperatorsList returns the result of a string in reverse polish notation (postfix) by exploding the string
-to a slice and editing the slice by replacing each op by its result until only a number is left or
-failing if the expression is invalid.
-
-The expression is kept in string format. Multiple conversions to test the validity of the expression
-is lowering efficiency. A list of authorized operators is kept to find the fist one in the list.
-
-Removing subroutines has no visible impact here.
-
-An invalid sign is interpreted as a value and the next operation panics.
-*/
+// Package operatorslist implements postfix calculator in two loops by editing the string
+// containing the calculation.
 package operatorslist
 
 import (
@@ -20,14 +9,25 @@ import (
 	"strings"
 )
 
+// RPNOperatorsList returns the result of a string in reverse polish notation (postfix) by
+// exploding the string to a slice and editing the slice. Each iteration replaces
+// an operation by its result until only a number is left.
+//
+// If the expression is invalid, it fails failing if the expression is invalid.
+// An invalid sign is interpreted as a value and the next operation panics.
+//
+// A list of authorized operators is kept to find the fist one in the list.
+// The expression is kept in a string.
+//
+// Multiple conversions to test the validity of the expression is lowering efficiency.
+// Removing subroutines has no visible impact here.
 func RPNOperatorsList(RPNInput string) float64 {
 	operators := strings.Fields(values.OperatorsList)
 	words := strings.Fields(RPNInput)
-	num, leftOp, rightOp := 0.0, 0.0, 0.0
+	var num, leftOp, rightOp float64
 	var err error
 	operationCompleted := false
 	for len(words) != 1 { // length of expression stops processing
-		err = nil
 		operationCompleted = false
 		for index, w := range words {
 			for _, op := range operators {

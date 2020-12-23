@@ -1,15 +1,4 @@
-/* Package turingmachine implements postfix calculator using a Turing machine.
-
-RPNTuringMachine returns the result of a string in reverse polish notation (postfix) by using a turing machine.
-The original band in the words exploded in a slice and results are hold on the band but in num form.
-The turing band has two copies one in string and one in float. This is mandatory to avoid
-multiple conversions.
-
-A processed operation or value is erased using ? which is reserved.
-A calculated value is marked as num which is reserved.
-
-An invalid sign is interpreted as a value and the next operation panics.
-*/
+// Package turingmachine implements postfix calculator using a faster Turing machine.
 package turingmachine
 
 import (
@@ -19,6 +8,15 @@ import (
 	"strings"
 )
 
+// RPNTuringMachine returns the result of a string in reverse polish notation (postfix) by using a turing machine.
+// The original band in the words exploded in a slice and results are hold on the band but in num form.
+// The turing band has two copies one in string and one in float. This is mandatory to avoid
+// multiple conversions.
+//
+// A processed operation or value is erased using ? which is reserved.
+// A calculated value is marked as num which is reserved.
+//
+// An invalid sign is interpreted as a value and the next operation panics.
 func RPNTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))

@@ -1,13 +1,5 @@
-/* Package operatorsnofields implements postfix calculator by editing the slice.
-
-Each operation is replaced by its result until only a number is left or
-failing if the expression is invalid.
-
-Searching the operators list as the constant string using the strings. package
-It removes breaking a second loop without major improvement.
-
-An invalid sign is interpreted as a value and the next operation panics.
-*/
+// Package operatorsnofields implements postfix calculator in one loop by editing the string
+// containing the calculation.
 package operatorsnofields
 
 import (
@@ -17,11 +9,18 @@ import (
 	"strings"
 )
 
+// RPNOperatorsNoFields returns the result of a sequence of operations written in
+// postfix notation (reverse polish notation).
+//
+// Each operation is replaced by its result until only a number is left.
+// It fails failing if the expression is invalid.
+// An invalid sign is interpreted as a value and the next operation panics.
+//
+// The list of operators is searched using package strings.
+// The search avoids to break a second loop but does not provide any major improvement.
 func RPNOperatorsNoFields(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
-	num := 0.0
-	leftOp := 0.0
-	rightOp := 0.0
+	var num, leftOp, rightOp float64
 	var err error
 	for len(words) != 1 { //length of expression stops processing
 		for index, w := range words {

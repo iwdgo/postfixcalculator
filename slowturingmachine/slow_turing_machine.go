@@ -1,16 +1,8 @@
-/* Package slowturingmachine implements postfix calculator using a Turing machine.
-
-RPNSlowTuringMachine returns the result of a string in reverse polish notation (postfix) using a Turing machine.
-The original band in the words exploded in a slice and results are held on the band but in num form.
-The band has two copies one in string and one in float. This is mandatory to avoid costly conversions.
-
-A processed operation or value is erased by replacing it with ? which is a reserved sign.
-A calculated value is marked as num which is also a reserved word.
-
-An invalid sign is interpreted as a value and the next operation panics.
-
-Shorter code that the fast version as it is using a "while" format but slower than the Go for structure.
-*/
+// Package slowturingmachine implements postfix calculator using a Turing machine using
+// a regular for loop.
+//
+// Code is Shorter that the fast version of the Turing machine as it is using a "while" format
+// but it remains slower than the usual for structure.
 package slowturingmachine
 
 import (
@@ -20,6 +12,14 @@ import (
 	"strings"
 )
 
+// RPNSlowTuringMachine returns the result of a string in reverse polish notation (postfix)
+// using a Turing machine.
+//
+// The original band in the words exploded in a slice and results are held on the band but in num form.
+// The band has two copies one in string and one in float. This is mandatory to avoid costly conversions.
+// A processed operation or value is erased by replacing it with ? which is a reserved sign.
+// A calculated value is marked as num which is also a reserved word.
+// An invalid sign is interpreted as a value and the next operation panics.
 func RPNSlowTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))

@@ -1,9 +1,4 @@
-/* Package stack implements postfix calculator using a stack package.
-
-RPNStack prints the result of a string in reverse polish notation (postfix) using stack package
-collections.
-
-*/
+// Package stack implements postfix calculator using a stack package.
 package stack
 
 import (
@@ -13,6 +8,8 @@ import (
 	"strings"
 )
 
+// RPNStack prints the result of a string in reverse polish notation (postfix)
+// using stack package of golang-collections.
 func RPNStack(input string) float64 {
 	num := 0.0
 	stackOperands := stack.Stack{} //= stack.New()
