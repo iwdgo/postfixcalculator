@@ -1,4 +1,4 @@
-name: GoLinux
+name: GitHub
 on: [push]
 jobs:
 
