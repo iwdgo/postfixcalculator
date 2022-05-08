@@ -1,8 +1,8 @@
-[![Go Reference](https://pkg.go.dev/badge/iwdgo/postfixcalculator.svg)](https://pkg.go.dev/iwdgo/postfixcalculator)
+[![Go Reference](https://pkg.go.dev/badge/github.com/iwdgo/postfixcalculator.svg)](https://pkg.go.dev/iwdgo/postfixcalculator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/iwdgo/postfixcalculator)](https://goreportcard.com/report/github.com/iwdgo/postfixcalculator)
-[![codecov](https://codecov.io/gh/iWdGo/postfixcalculator/branch/master/graph/badge.svg)](https://codecov.io/gh/iWdGo/postfixcalculator)
+[![codecov](https://codecov.io/gh/iwdgo/postfixcalculator/branch/master/graph/badge.svg)](https://codecov.io/gh/iWdGo/postfixcalculator)
 
-![GitHub](https://github.com/iWdGo/postfixcalculator/workflows/GitHub/badge.svg)
+![GitHub](https://github.com/iwdgo/postfixcalculator/workflows/GitHub/badge.svg)
 
 # Reverse Polish Notation calculator
 
@@ -27,13 +27,23 @@ Input is a string. Process panics on invalid values and operators.
 - [using string to hold a list of operators in two loops](https://pkg.go.dev/github.com/iwdgo/postfixcalculator/operatorslist)
 - [using string to hold a list of operators in one loop](https://pkg.go.dev/github.com/iwdgo/postfixcalculator/operatorsnofields)
 - Turing machine:
-  - [slow](https://pkg.go.dev/github.com/iwdgo/slowturingmachine)
-  - [fast](https://pkg.go.dev/github.com/iwdgo/turingmachine)
+  - [slow](https://pkg.go.dev/github.com/iwdgo/postfixcalculator/slowturingmachine)
+  - [fast](https://pkg.go.dev/github.com/iwdgo/postfixcalculator/turingmachine)
 
 ## How to
 
-To calculate any string, `go get github.com/iwdgo/postfixcalculator` and
-the string can be passed using the chosen method.
+There are examples in every package. An first use that prints 4 could be
+```
+package main
+
+import "github.com/iwdgo/postfixcalculator/turingmachine"
+
+func main() {
+	println(turingmachine.RPNTuringMachine("2 2 +"))
+}
+
+```
+
 
 ## Results
 

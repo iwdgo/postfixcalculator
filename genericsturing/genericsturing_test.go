@@ -1,4 +1,4 @@
-package turingmachine
+package genericsturing
 
 import (
 	"fmt"
