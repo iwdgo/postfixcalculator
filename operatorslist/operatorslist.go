@@ -1,5 +1,8 @@
-// Package operatorslist implements postfix calculator in two loops by editing the string
-// containing the calculation.
+/*
+	Package operatorslist implements postfix calculator in two loops by editing the string
+
+containing the calculation.
+*/
 package operatorslist
 
 import (

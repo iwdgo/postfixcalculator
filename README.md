@@ -17,7 +17,10 @@ All solutions support :
 - binary operator ^ (exponent)
 - unary operator sqrt
 
-Input is a string. Process panics on invalid values and operators.
+Input is a string where elements are spaced. Process panics on invalid values and operators.
+Float values are treated as 64 bits.
+The original expression is used to store values and edited. When it contains only one element,
+calculation is complete and the result is returned as a `float64`.
 
 ## Solutions
 
@@ -32,7 +35,7 @@ Input is a string. Process panics on invalid values and operators.
 
 ## How to
 
-There are examples in every package. An first use that prints 4 could be
+There are examples in every package. A first use that prints 4 could be
 ```
 package main
 
@@ -52,8 +55,8 @@ func main() {
 - Adding slice editing slows performance by a factor of 3.
 - The worst occurs when all elements of the expression are in one slice.
 
-Slice is the underlying type of string. So string editing won't change anything and might be
-worse as a string is read-only and could be copied many times.
+Slice is the underlying type of string. So string editing will probably not improve if not worsen 
+as a string is read-only and could be copied many times during the process.
 
 ## Optimum
 

@@ -21,10 +21,12 @@ func RPNTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))
 	// Converting blindly is a mistake as it is very costly
-	i, ro := 0, 0.0 // ro is the index of the right operand
+	// ro is the index of the right operand
+	i, ro := 0, 0.0
 	var err error
 	for index, w := range words {
-		if strings.Contains(values.OperatorsList, w) { // "?" is always skipped
+		if strings.Contains(values.OperatorsList, w) {
+			// "?" is always skipped
 			// at least one operand exists
 			// no number can be used for detection so "num" is checked
 			// if word is ?, no number there, move before
@@ -32,14 +34,16 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// otherwise attempt conversion
 			i = index - 1
 			for words[i] != "num" && i >= 0 {
-				if words[i] == "?" { // former operator
+				// former operator
+				if words[i] == "?" {
 					i--
 					// } else if words[i] != "num" { // number not yet converted
 				} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 					panic("Invalid right operand")
 				} else {
-					words[i] = "num" // conversion done
-				} // else operand is found
+					// Conversion done
+					words[i] = "num"
+				}
 			}
 			// w is an operator and empty cells are skipped
 			if w == "sqrt" {
@@ -47,9 +51,10 @@ func RPNTuringMachine(RPNInput string) float64 {
 				numbers[i] = math.Sqrt(numbers[i])
 			} else {
 				// binary operator
-				ro = numbers[i] // keep addressing has no value. So copying value
-				words[i] = "?"  // erasing value in operation string
-				// looking for the left operand which is to the left...
+				// Copying value
+				ro = numbers[i]
+				// Erase operator in expression
+				words[i] = "?"
 				i--
 				// You can't range from max to min of index
 				for words[i] != "num" && i >= 0 {
@@ -58,7 +63,8 @@ func RPNTuringMachine(RPNInput string) float64 {
 					} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 						panic("Invalid left operand")
 					} else {
-						words[i] = "num" // conversion done
+						// Conversion done
+						words[i] = "num"
 					}
 				}
 				switch w {
@@ -76,12 +82,11 @@ func RPNTuringMachine(RPNInput string) float64 {
 					panic("Invalid operator : " + w)
 				}
 			}
-			words[index] = "?" // erasing operator as operation is completed
-			// break was here
-			index = 0 // re-starting without re-init for. Not the cleanest
+			// Complete erasure
+			words[index] = "?"
+			// Re-start for loop without break, nor while style. ()
+			index = 0
 		}
 	}
-	// counting remaining ops is not needed as the previous for loop stops only
-	// when words is fully explored and no operator is found
-	return numbers[0] // postfix final result can only end up there
+	return numbers[0]
 }

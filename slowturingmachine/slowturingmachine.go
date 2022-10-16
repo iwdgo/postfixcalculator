@@ -1,8 +1,11 @@
-// Package slowturingmachine implements postfix calculator using a Turing machine using
-// a regular for loop.
-//
-// Code is Shorter that the fast version of the Turing machine as it is using a "while" format
-// but it remains slower than the usual for structure.
+/*
+	Package slowturingmachine implements postfix calculator using a Turing machine using
+
+a regular for loop.
+
+Code is shorter that the fast version of the Turing machine as it is using a "while" format
+but it remains slower than the usual for structure.
+*/
 package slowturingmachine
 
 import (
@@ -43,18 +46,20 @@ func RPNSlowTuringMachine(RPNInput string) float64 {
 					if err != nil {
 						panic("Invalid right operand")
 					}
-					words[i] = "num" //conversion done
+					// Conversion done
+					words[i] = "num"
 				}
 			}
-			//w is an operator and empty cells are skipped
+			// w is an operator
 			if w == "sqrt" {
-				//unary operator
+				// Unary operator
 				numbers[i] = math.Sqrt(numbers[i])
 			} else {
-				//binary operator
+				// Binary operator
 				rightOp = numbers[i]
-				words[i] = "?" //erasing value
-				//looking for the left operand which is to the left...
+				// Erase value
+				words[i] = "?"
+				// Looking for the left operand which is to the left...
 				i--
 				for words[i] != "num" && i >= 0 {
 					if words[i] == "?" {
@@ -64,7 +69,8 @@ func RPNSlowTuringMachine(RPNInput string) float64 {
 						if err != nil {
 							panic("Invalid left operand")
 						}
-						words[i] = "num" //conversion done
+						// Conversion done
+						words[i] = "num"
 					}
 				}
 				leftOp = numbers[i] //cell not erased as it keeps result
@@ -83,17 +89,15 @@ func RPNSlowTuringMachine(RPNInput string) float64 {
 					panic("Invalid operator : " + w)
 				}
 			}
-			//restarting from the beginning of the expression by breaking operators for
-			words[index] = "?" //erasing operator as operation is completed
-			index = 0          //re-starting without re-init for. No the cleanest
+			// Restarting from the beginning of the expression by breaking operators for
+			// Erase operator
+			words[index] = "?"
+			// Re-start without re-init for loop
+			index = 0
 		} else {
 			index++
 		}
 
 	}
-	/*counting remaining ops is not necessary. If you index goes above the size, you reached
-	the end of the band and the value is always in the first position for a valid
-	expression.
-	*/
 	return numbers[0]
 }

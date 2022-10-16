@@ -1,5 +1,5 @@
 // Package operatorsnofields implements postfix calculator in one loop by editing the string
-// containing the calculation.
+// containing the expression to evaluate.
 package operatorsnofields
 
 import (
@@ -13,7 +13,7 @@ import (
 // postfix notation (reverse polish notation).
 //
 // Each operation is replaced by its result until only a number is left.
-// It fails failing if the expression is invalid.
+// It panics if the expression is invalid.
 // An invalid sign is interpreted as a value and the next operation panics.
 //
 // The list of operators is searched using package strings.
@@ -22,20 +22,22 @@ func RPNOperatorsNoFields(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	var num, leftOp, rightOp float64
 	var err error
-	for len(words) != 1 { //length of expression stops processing
+	// Loop until expression contains one word
+	for len(words) != 1 {
 		for index, w := range words {
 			if strings.Contains(values.OperatorsList, w) {
-				//w is an operator
+				// w is an operator
 				if w == "sqrt" {
-					//unary operator
+					// unary operator
 					num, err = strconv.ParseFloat(words[index-1], 64)
 					if err != nil {
 						panic("Invalid value for sqrt")
 					}
 					words[index-1] = strconv.FormatFloat(math.Sqrt(num), 'f', 10, 64)
-					words = append(words[:index], words[index+1:]...) //removing sqrt
+					// Erase operator and operand
+					words = append(words[:index], words[index+1:]...)
 				} else {
-					//binary operator
+					// Binary operator
 					if leftOp, err = strconv.ParseFloat(words[index-2], 64); err != nil {
 						panic("Invalid left operand")
 					}
@@ -57,10 +59,10 @@ func RPNOperatorsNoFields(RPNInput string) float64 {
 					default:
 						panic("Invalid operator")
 					}
-					/* removing binary operator by removing the slice until the item after the result */
+					// Erase operator and operands
 					words = append(words[:index-1], words[index+1:]...)
 				}
-				//restarting from the beginning of the expression by breaking operators for
+				// Restart from start of expression
 				break
 			}
 		}
