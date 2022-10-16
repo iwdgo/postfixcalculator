@@ -27,7 +27,7 @@ func RPNSlowTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))
 	i, index := 0, 0
-	leftOp, rightOp := 0.0, 0.0
+	rightOp := 0.0
 	var err error
 	for index < len(words) {
 		w := words[index]
@@ -73,18 +73,18 @@ func RPNSlowTuringMachine(RPNInput string) float64 {
 						words[i] = "num"
 					}
 				}
-				leftOp = numbers[i] //cell not erased as it keeps result
+				// Cell will store result
 				switch w {
 				case "+":
-					numbers[i] = leftOp + rightOp
+					numbers[i] += rightOp
 				case "-":
-					numbers[i] = leftOp - rightOp
+					numbers[i] -= rightOp
 				case "*":
-					numbers[i] = leftOp * rightOp
+					numbers[i] *= rightOp
 				case "/":
-					numbers[i] = leftOp / rightOp
+					numbers[i] /= rightOp
 				case "^":
-					numbers[i] = math.Pow(leftOp, rightOp)
+					numbers[i] = math.Pow(numbers[i], rightOp)
 				default:
 					panic("Invalid operator : " + w)
 				}
