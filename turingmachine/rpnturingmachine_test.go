@@ -22,6 +22,34 @@ func TestRPNTuringMachine(t *testing.T) {
 	}
 }
 
+func TestRPNTuringMachine_panicOperator(t *testing.T) {
+	t.Skip("Panics on operand error and not unknown operator")
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	RPNTuringMachine(values.InvalidOperator)
+}
+
+func TestRPNTuringMachine_panicLeftOperand(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	RPNTuringMachine(values.InvalidLeftOperand)
+}
+
+func TestRPNTuringMachine_panicRightOperand(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	RPNTuringMachine(values.InvalidRightOperand)
+}
+
 func BenchmarkRPNTuringMachine(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		RPNTuringMachine(values.Input)

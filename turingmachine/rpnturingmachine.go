@@ -79,6 +79,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				case "^":
 					numbers[i] = math.Pow(numbers[i], ro)
 				default:
+					// TODO Never reached as no known operator was found
 					panic("Invalid operator : " + w)
 				}
 			}
