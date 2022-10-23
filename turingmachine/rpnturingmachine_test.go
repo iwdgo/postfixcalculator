@@ -3,6 +3,7 @@ package turingmachine
 import (
 	"fmt"
 	values "github.com/iwdgo/postfixcalculator/common"
+	"strconv"
 	"testing"
 )
 
@@ -22,11 +23,11 @@ func TestRPNTuringMachine(t *testing.T) {
 	}
 }
 
-func TestRPNTuringMachine_oneoperand(t *testing.T) {
-	t.Skip("One operand band should return the value")
-	i := 1.0
-	if got := RPNTuringMachine("1"); got != i {
-		t.Fatalf("got %v, want %v", got, i)
+func TestRPNEmulatingStack_oneOperand(t *testing.T) {
+	s := "1"
+	want, _ := strconv.ParseFloat(s, 64)
+	if got := RPNTuringMachine(s); got != want {
+		t.Fatalf("got %v, want %v", got, want)
 	}
 }
 

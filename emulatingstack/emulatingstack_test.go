@@ -3,6 +3,7 @@ package emulatingstack
 import (
 	"fmt"
 	values "github.com/iwdgo/postfixcalculator/common"
+	"strconv"
 	"testing"
 )
 
@@ -31,6 +32,23 @@ func TestRPNEmulatingStack_panic(t *testing.T) {
 	}()
 
 	RPNEmulatingStack(values.InvalidInput)
+}
+
+func TestRPNEmulatingStack_oneOperand(t *testing.T) {
+	s := "1"
+	want, _ := strconv.ParseFloat(s, 64)
+	if got := RPNEmulatingStack(s); got != want {
+		t.Fatalf("got %v, want %v", got, want)
+	}
+}
+
+func TestRPNEmulatingStack_panicOperator(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	RPNEmulatingStack(values.InvalidOperator)
 }
 
 func BenchmarkRPNEmulatingStack(b *testing.B) {
