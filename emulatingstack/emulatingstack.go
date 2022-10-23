@@ -1,7 +1,8 @@
-/* Package emulatingstack implements postfix calculator by emulating a stack.
+/*
+	Package emulatingstack implements postfix calculator by emulating a stack.
 
 Original is from http://rosettacode.org/wiki/Parsing/RPN_calculator_algorithm#Go where a example of
-a printed output can be found. This version contains minor changes for this test.
+a printed output can be found. This version contains minor changes for testing purposes.
 
 This emulation is not using a stack in the strict sense as the structure is accessed sequentially
 when only pop/push operations are allowed by definition but it is the most efficient as the
@@ -16,7 +17,8 @@ import (
 )
 
 func RPNEmulatingStack(input string) float64 {
-	var stack []float64 // "stack" only contains numbers
+	// The stack contains numbers and no operator
+	var stack []float64
 	for _, tok := range strings.Fields(input) {
 		switch tok {
 		case "+":

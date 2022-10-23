@@ -21,7 +21,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))
 	// Converting blindly is a mistake as it is very costly
-	// ro is the index of the right operand
+	// ro is the value of the right operand
 	i, ro := 0, 0.0
 	var err error
 	for index, w := range words {
@@ -47,16 +47,16 @@ func RPNTuringMachine(RPNInput string) float64 {
 			}
 			// w is an operator and empty cells are skipped
 			if w == "sqrt" {
-				// unary operator
+				// Unary operator
 				numbers[i] = math.Sqrt(numbers[i])
 			} else {
-				// binary operator
+				// Binary operator
 				// Copying value
 				ro = numbers[i]
 				// Erase operator in expression
 				words[i] = "?"
 				i--
-				// You can't range from max to min of index
+				// You cannot range from max to min of index
 				for words[i] != "num" && i >= 0 {
 					if words[i] == "?" {
 						i--

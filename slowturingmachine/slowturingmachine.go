@@ -1,10 +1,10 @@
 /*
-	Package slowturingmachine implements postfix calculator using a Turing machine using
+	Package slowturingmachine implements postfix calculator using a Turing machine using a for loop which is
 
-a regular for loop.
+rewinded without initialization.
 
-Code is shorter that the fast version of the Turing machine as it is using a "while" format
-but it remains slower than the usual for structure.
+Code is shorter that the fast version of the Turing machine as it is using a "while" format.
+It remains slower than the usual for structure.
 */
 package slowturingmachine
 
