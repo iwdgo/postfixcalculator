@@ -8,14 +8,13 @@ import (
 	"strings"
 )
 
-// RPNTuringMachine returns the result of a string in reverse polish notation (postfix) by using a turing machine.
-// The original band in the words exploded in a slice and results are hold on the band but in num form.
-// The turing band has two copies one in string and one in float. This is mandatory to avoid
-// multiple conversions.
-//
-// A processed operation or value is erased using ? which is reserved.
-// A calculated value is marked as num which is reserved.
-//
+// RPNTuringMachine returns the result of a string in reverse polish notation (postfix) using a turing machine.
+// It expects a band as a string read from left to write complying with postfix notation where blank
+// spaces operands and operators.
+// A first slice is the band where words are held in a slice. A processed operation is erased using ? and
+// a converted value is erased using 'num'. Both ? and num are reserved keywords.
+// A second slice holds numbers as float using the same index as the band. It avois multiple
+// conversions and searches.
 // An invalid sign is interpreted as a value and the next operation panics.
 func RPNTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
@@ -27,16 +26,13 @@ func RPNTuringMachine(RPNInput string) float64 {
 	for index, w := range words {
 		if strings.Contains(values.OperatorsList, w) {
 			// "?" is always skipped
-			// at least one operand exists
-			// no number can be used for detection so "num" is checked
-			// if word is ?, no number there, move before
-			// if word is num, already converted, read numbers
-			// otherwise attempt conversion
+			// At least one operand is expected in a preceding place.
 			i = index - 1
 			for words[i] != "num" && i >= 0 {
-				// former operator
+				// if word is ?, no number there, move before
 				if words[i] == "?" {
 					i--
+					// if word is num, already converted, read numbers
 					// } else if words[i] != "num" { // number not yet converted
 				} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 					panic("Invalid right operand")
