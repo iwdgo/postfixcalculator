@@ -33,4 +33,4 @@ jobs:
       run: go test -cover -coverprofile=coverage.txt -covermode=atomic -race ./... && bash <(curl -s https://codecov.io/bash)
 
     - name: Benchmark
-      run: go test -benchtime 2s -cpu 1,2,4 -bench=. ./... | grep Benchmark
+      run: go test -benchtime 5x -cpu 1,2,4 -bench=. ./... | grep Benchmark
