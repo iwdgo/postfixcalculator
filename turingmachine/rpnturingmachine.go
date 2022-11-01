@@ -11,8 +11,9 @@ import (
 // RPNTuringMachine returns the result of a string in reverse polish notation (postfix) using a turing machine.
 // It expects a band as a string read from left to write complying with postfix notation where blank
 // spaces operands and operators.
-// A first slice is the band where words are held in a slice. A processed operation is erased using ? and
-// a converted value is erased using 'num'. Both ? and num are reserved keywords.
+// A first slice is the band where words are held in a slice. A processed operator is erased by replacing
+// it with ? in the expression band. Similarly, a converter number is erased using 'num'.
+// Both ? and num are reserved keywords.
 // A second slice holds numbers as float using the same index as the band. It avois multiple
 // conversions and searches.
 // An invalid sign is interpreted as a value and the next operation panics.
@@ -24,7 +25,6 @@ func RPNTuringMachine(RPNInput string) float64 {
 	var err error
 	for index, w := range words {
 		if strings.Contains(values.OperatorsList, w) {
-			// "?" is always skipped
 			// At least one operand is expected in a preceding place.
 			i = index - 1
 			for words[i] != "num" && i >= 0 {
