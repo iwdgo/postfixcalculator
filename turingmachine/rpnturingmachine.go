@@ -32,8 +32,6 @@ func RPNTuringMachine(RPNInput string) float64 {
 				// if word is ?, no number there, move before
 				if words[i] == "?" {
 					i--
-					// if word is num, already converted, read numbers
-					// } else if words[i] != "num" { // number not yet converted
 				} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 					panic("Invalid right operand")
 				} else {
