@@ -41,26 +41,6 @@ func TestOneOperator(t *testing.T) {
 	RPN("o")
 }
 
-func TestPanicLeftOperand(t *testing.T) {
-	t.Skipf("Unreachable. No coverage improvement.")
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("The code did not panic")
-		}
-	}()
-	_ = RPN("a sqrt")
-}
-
-func TestPanicRightOperand(t *testing.T) {
-	t.Skipf("Unreachable. No coverage improvement.")
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("The code did not panic")
-		}
-	}()
-	_ = RPN(values.InvalidRightOperand)
-}
-
 func TestPanicOperator(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {

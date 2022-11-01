@@ -19,29 +19,25 @@ func RPN(RPNInput string) float64 {
 	for len(words) != 1 {
 		err = nil
 		index = 0
+		// Search for an operator by detecting a failed conversion.
+		// An invalid operand also triggers a calculation, i.e. no conversion can fail during the calculation
 		for err == nil && index < len(words) {
 			_, err = strconv.ParseFloat(words[index], 64)
-			index++
-		}
-		// TODO err is ignored expecting an operator but could be an operand
-		index -= 1
-		if words[index] == "sqrt" {
-			// Unary operator
-			if num, err = strconv.ParseFloat(words[index-1], 64); err != nil {
-				// TODO Unreachable
-				panic("Invalid value for sqrt")
+			if err == nil {
+				index++
 			}
+		}
+		if words[index] == "sqrt" {
+			// Unary operator for which conversion of operand cannot fail
+			num, _ = strconv.ParseFloat(words[index-1], 64)
+			// Result is overwriting the initial value and stored as a string
 			words[index-1] = strconv.FormatFloat(math.Sqrt(num), 'f', 10, 64)
 			// Remove operator sqrt
 			words = append(words[:index], words[index+1:]...)
 		} else {
 			// Binary operator
-			if num, err = strconv.ParseFloat(words[index-2], 64); err != nil {
-				panic("Invalid left operand")
-			}
-			if num2, err = strconv.ParseFloat(words[index-1], 64); err != nil {
-				panic("Invalid right operand")
-			}
+			num, _ = strconv.ParseFloat(words[index-2], 64)
+			num2, _ = strconv.ParseFloat(words[index-1], 64)
 			switch words[index] {
 			case "+":
 				words[index-2] = strconv.FormatFloat(num+num2, 'f', 13, 64)
@@ -54,7 +50,6 @@ func RPN(RPNInput string) float64 {
 			case "^":
 				words[index-2] = strconv.FormatFloat(math.Pow(num, num2), 'f', 13, 64)
 			default:
-				// TODO Unreachable
 				panic("Invalid operator")
 			}
 			// Remove operator and right operand
@@ -63,7 +58,7 @@ func RPN(RPNInput string) float64 {
 	}
 	num, err = strconv.ParseFloat(words[0], 64)
 	if err != nil {
-		panic("Invalid operator or operand")
+		panic("Invalid operand or expression with one operator")
 	}
 	return num
 }
