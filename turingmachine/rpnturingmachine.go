@@ -28,7 +28,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 		if strings.Contains(values.OperatorsList, w) {
 			// At least one operand is expected in a preceding place.
 			i = index - 1
-			for words[i] != "num" && i >= 0 {
+			for words[i] != "num" {
 				// if word is ?, no number there, move before
 				if words[i] == "?" {
 					i--
@@ -53,7 +53,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				words[i] = "?"
 				i--
 				// You cannot range from max to min of index
-				for words[i] != "num" && i >= 0 {
+				for words[i] != "num" {
 					if words[i] == "?" {
 						i--
 					} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
