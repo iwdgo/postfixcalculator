@@ -20,6 +20,7 @@ import (
 func RPNTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	numbers := make([]float64, len(words))
+	// i is the index in the current operation
 	// ro is the value of the right operand
 	i, ro := 0, 0.0
 	var err error
