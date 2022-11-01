@@ -14,6 +14,7 @@ func RPNStack(input string) float64 {
 	num := 0.0
 	stackOperands := stack.Stack{} //= stack.New()
 	var err error
+	var f float64
 	for _, tok := range strings.Fields(input) {
 		switch tok {
 		case "+":
@@ -32,7 +33,7 @@ func RPNStack(input string) float64 {
 		case "sqrt":
 			stackOperands.Push(math.Sqrt(stackOperands.Pop().(float64)))
 		default:
-			f, _ := strconv.ParseFloat(tok, 64)
+			f, err = strconv.ParseFloat(tok, 64)
 			if err != nil {
 				panic("Invalid number and not a known operator")
 			}
