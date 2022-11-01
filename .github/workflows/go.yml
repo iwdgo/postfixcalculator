@@ -25,7 +25,10 @@ jobs:
       run: go build -v ./...
 
     - name: Test
-      run: go test -cover -coverprofile=coverage.txt -covermode=atomic -race ./... && bash <(curl -s https://codecov.io/bash)
+      run: go test -cover -coverprofile=coverage.out -covermode=atomic -race ./...
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
 
     - name: Benchmark
       run: go test -benchtime 5x -cpu 1,2,4 -bench=. ./... | grep Benchmark
