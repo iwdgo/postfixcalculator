@@ -23,6 +23,24 @@ func TestRPNOperatorsList(t *testing.T) {
 	}
 }
 
+func TestPanicLeftOperand(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	_ = RPNOperatorsList(values.InvalidLeftOperand)
+}
+
+func TestPanicRightOperand(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	_ = RPNOperatorsList(values.InvalidRightOperand)
+}
+
 func BenchmarkRPNOperatorsList(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		RPNOperatorsList(values.Input)

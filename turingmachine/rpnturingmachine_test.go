@@ -23,7 +23,7 @@ func TestRPNTuringMachine(t *testing.T) {
 	}
 }
 
-func TestRPNTuringMachine_oneOperand(t *testing.T) {
+func TestOneOperand(t *testing.T) {
 	t.Skip("One operand band is not handled correctly")
 	s := "1"
 	want, _ := strconv.ParseFloat(s, 64)
@@ -32,7 +32,7 @@ func TestRPNTuringMachine_oneOperand(t *testing.T) {
 	}
 }
 
-func TestRPNTuringMachine_panicOperator(t *testing.T) {
+func TestPanicOperator(t *testing.T) {
 	t.Skip("Panics on operand error and not unknown operator")
 	defer func() {
 		if r := recover(); r == nil {
@@ -42,7 +42,7 @@ func TestRPNTuringMachine_panicOperator(t *testing.T) {
 	RPNTuringMachine(values.InvalidOperator)
 }
 
-func TestRPNTuringMachine_panicLeftOperand(t *testing.T) {
+func TestPanicLeftOperand(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Fatal("The code did not panic")
@@ -51,7 +51,7 @@ func TestRPNTuringMachine_panicLeftOperand(t *testing.T) {
 	RPNTuringMachine(values.InvalidLeftOperand)
 }
 
-func TestRPNTuringMachine_panicRightOperand(t *testing.T) {
+func TestPanicRightOperand(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Fatal("The code did not panic")

@@ -23,6 +23,24 @@ func TestRPNOperatorsNoFields(t *testing.T) {
 	}
 }
 
+func TestPanicLeftOperand(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	_ = RPNOperatorsNoFields(values.InvalidLeftOperand)
+}
+
+func TestPanicRightOperand(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	_ = RPNOperatorsNoFields(values.InvalidRightOperand)
+}
+
 func BenchmarkRPNOperatorsNoFields(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		RPNOperatorsNoFields(values.Input)

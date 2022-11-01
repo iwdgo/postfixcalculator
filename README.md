@@ -72,7 +72,6 @@ Exiting a `for` loop without finishing is also costly.
 ## Tests
 
 To run tests: `>go test ./...`
-Testing covers all lines but panic is not counted by `go test -cover`.
 
 ## Benchmark
 
