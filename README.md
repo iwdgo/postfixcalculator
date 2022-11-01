@@ -54,7 +54,8 @@ func main() {
 - Emulating the stack is the most efficient classic method.
 - Using a `struct` from an existing package divides performance by 2.
 - Adding slice editing slows performance by a factor of 3.
-- The worst occurs when all elements of the expression are in one slice.
+- The worst occurs when all elements of the expression and its results are in one slice as
+conversion to and from numbers is an expensive operation.
 
 Slice is the underlying type of string. So string editing will probably not improve if not worsen 
 as a string is read-only and could be copied many times during the process.
