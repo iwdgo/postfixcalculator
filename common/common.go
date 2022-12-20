@@ -1,10 +1,5 @@
 package common
 
-import (
-	"os"
-	"testing"
-)
-
 const OperatorsList = "+ - * / ^ sqrt"
 
 const (
@@ -20,7 +15,3 @@ const (
 	RPNInputWant = 30.000000
 	InputWant    = 3.0001220703125
 )
-
-func TestMain(m *testing.M) {
-	os.Exit(m.Run())
-}
