@@ -1,6 +1,9 @@
 package common
 
-import "testing"
+import (
+	"strconv"
+	"testing"
+)
 
 const OperatorsList = "+ - * / ^ sqrt"
 
@@ -11,7 +14,6 @@ const (
 	InvalidLeftOperand  = "a 4 *"                          // a is not a valid operand
 	InvalidRightOperand = "3 4,3 *"                        // 4,3 is not a valid operand
 	InvalidOperator     = "3 4 o"                          // o is not a known operator
-	OneOperand          = "1"
 	OneOperator         = "+"
 
 	RPNInputWant = 30.000000
@@ -36,4 +38,12 @@ func OneInvalidOperator(t *testing.T, RPN Rpn) {
 		}
 	}()
 	_ = RPN("o")
+}
+
+func OneOperand(t *testing.T, RPN Rpn) {
+	s := "1"
+	want, _ := strconv.ParseFloat(s, 64)
+	if got := RPN(s); got != want {
+		t.Errorf("got %v, want %v", got, want)
+	}
 }

@@ -3,7 +3,6 @@ package turingmachine
 import (
 	"fmt"
 	values "github.com/iwdgo/postfixcalculator/common"
-	"strconv"
 	"testing"
 )
 
@@ -24,12 +23,8 @@ func TestRPNTuringMachine(t *testing.T) {
 }
 
 func TestOneOperand(t *testing.T) {
-	t.Skip("One operand band is not handled correctly")
-	s := "1"
-	want, _ := strconv.ParseFloat(s, 64)
-	if got := RPNTuringMachine(s); got != want {
-		t.Fatalf("got %v, want %v", got, want)
-	}
+	t.Skip("one operand is incorrectly handled")
+	values.OneOperand(t, RPNTuringMachine)
 }
 
 func TestPanicOperator(t *testing.T) {

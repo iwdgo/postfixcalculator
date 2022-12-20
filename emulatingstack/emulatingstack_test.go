@@ -3,7 +3,6 @@ package emulatingstack
 import (
 	"fmt"
 	values "github.com/iwdgo/postfixcalculator/common"
-	"strconv"
 	"testing"
 )
 
@@ -34,12 +33,7 @@ func TestRPNEmulatingStack_panic(t *testing.T) {
 }
 
 func TestOneOperand(t *testing.T) {
-	t.Skip("One operand band is not handled correctly")
-	s := "1"
-	want, _ := strconv.ParseFloat(s, 64)
-	if got := RPNEmulatingStack(s); got != want {
-		t.Fatalf("got %v, want %v", got, want)
-	}
+	values.OneOperand(t, RPNEmulatingStack)
 }
 
 func TestPanicOperator(t *testing.T) {

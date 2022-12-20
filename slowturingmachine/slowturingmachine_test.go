@@ -35,6 +35,11 @@ func TestPanicRightOperand(t *testing.T) {
 	_ = RPNSlowTuringMachine(values.InvalidRightOperand)
 }
 
+func TestOneOperand(t *testing.T) {
+	t.Skip("one operand is incorrectly handled")
+	values.OneOperand(t, RPNSlowTuringMachine)
+}
+
 func BenchmarkRPNSlowTuringMachine(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		RPNSlowTuringMachine(values.Input)

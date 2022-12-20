@@ -3,7 +3,6 @@ package multipleconversions
 import (
 	"fmt"
 	values "github.com/iwdgo/postfixcalculator/common"
-	"strconv"
 	"testing"
 )
 
@@ -25,11 +24,7 @@ func TestRPN(t *testing.T) {
 }
 
 func TestOneOperand(t *testing.T) {
-	s := "1"
-	want, _ := strconv.ParseFloat(s, 64)
-	if got := RPN(s); got != want {
-		t.Fatalf("got %v, want %v", got, want)
-	}
+	values.OneOperand(t, RPN)
 }
 
 func TestOneOperator(t *testing.T) {
