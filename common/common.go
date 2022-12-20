@@ -28,3 +28,12 @@ func PanicLeftOperand(t *testing.T, RPN Rpn) {
 	}()
 	_ = RPN(InvalidLeftOperand)
 }
+
+func OneInvalidOperator(t *testing.T, RPN Rpn) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	_ = RPN("o")
+}

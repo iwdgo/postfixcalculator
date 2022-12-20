@@ -49,14 +49,8 @@ func TestNoOperator(t *testing.T) {
 }
 
 func TestOneInvalidOperator(t *testing.T) {
-	t.Skip("code does not panic")
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("The code did not panic")
-		}
-	}()
-	s := "o"
-	_ = RPNTuringMachine(s)
+	t.Skip("does not panic but returns 0")
+	values.OneInvalidOperator(t, RPNTuringMachine)
 }
 
 func TestPanicLeftOperand(t *testing.T) {
