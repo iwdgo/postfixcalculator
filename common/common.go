@@ -47,3 +47,12 @@ func OneOperand(t *testing.T, RPN Rpn) {
 		t.Errorf("got %v, want %v", got, want)
 	}
 }
+
+func PanicOperator(t *testing.T, RPN Rpn) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	_ = RPN(InvalidOperator)
+}

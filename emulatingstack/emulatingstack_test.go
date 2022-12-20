@@ -38,12 +38,7 @@ func TestOneOperand(t *testing.T) {
 
 func TestPanicOperator(t *testing.T) {
 	t.Skip("Panics on operand error and not unknown operator")
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("The code did not panic")
-		}
-	}()
-	RPNEmulatingStack(values.InvalidOperator)
+	values.PanicOperator(t, RPNEmulatingStack)
 }
 
 func TestPanicLeftOperand(t *testing.T) {

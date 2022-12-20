@@ -37,12 +37,7 @@ func TestOneOperator(t *testing.T) {
 }
 
 func TestPanicOperator(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("The code did not panic")
-		}
-	}()
-	_ = RPN(values.InvalidOperator)
+	values.PanicOperator(t, RPN)
 }
 
 func BenchmarkRPN(b *testing.B) {
