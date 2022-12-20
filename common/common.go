@@ -1,5 +1,7 @@
 package common
 
+import "testing"
+
 const OperatorsList = "+ - * / ^ sqrt"
 
 const (
@@ -15,3 +17,14 @@ const (
 	RPNInputWant = 30.000000
 	InputWant    = 3.0001220703125
 )
+
+type Rpn func(s string) float64
+
+func PanicLeftOperand(t *testing.T, RPN Rpn) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	_ = RPN(InvalidLeftOperand)
+}

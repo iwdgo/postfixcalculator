@@ -23,12 +23,7 @@ func TestRPNSlowTuringMachine(t *testing.T) {
 }
 
 func TestPanicLeftOperand(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("The code did not panic")
-		}
-	}()
-	_ = RPNSlowTuringMachine(values.InvalidLeftOperand)
+	values.PanicLeftOperand(t, RPNSlowTuringMachine)
 }
 
 func TestPanicRightOperand(t *testing.T) {

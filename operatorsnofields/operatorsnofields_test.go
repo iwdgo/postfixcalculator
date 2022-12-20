@@ -24,12 +24,7 @@ func TestRPNOperatorsNoFields(t *testing.T) {
 }
 
 func TestPanicLeftOperand(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("The code did not panic")
-		}
-	}()
-	_ = RPNOperatorsNoFields(values.InvalidLeftOperand)
+	values.PanicLeftOperand(t, RPNOperatorsNoFields)
 }
 
 func TestPanicRightOperand(t *testing.T) {

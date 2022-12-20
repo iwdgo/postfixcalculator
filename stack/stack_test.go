@@ -26,12 +26,7 @@ func TestRPNStack(t *testing.T) {
 }
 
 func TestPanicLeftOperand(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("The code did not panic")
-		}
-	}()
-	_ = RPNStack(values.InvalidLeftOperand)
+	values.PanicLeftOperand(t, RPNStack)
 }
 
 func TestPanicRightOperand(t *testing.T) {
