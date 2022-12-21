@@ -22,6 +22,15 @@ const (
 
 type Rpn func(s string) float64
 
+func PanicRightOperand(t *testing.T, RPN Rpn) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatal("The code did not panic")
+		}
+	}()
+	_ = RPN(InvalidRightOperand)
+}
+
 func PanicLeftOperand(t *testing.T, RPN Rpn) {
 	defer func() {
 		if r := recover(); r == nil {

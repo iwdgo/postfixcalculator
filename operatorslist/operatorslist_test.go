@@ -28,12 +28,7 @@ func TestPanicLeftOperand(t *testing.T) {
 }
 
 func TestPanicRightOperand(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("The code did not panic")
-		}
-	}()
-	_ = RPNOperatorsList(values.InvalidRightOperand)
+	values.PanicRightOperand(t, RPNOperatorsList)
 }
 
 func BenchmarkRPNOperatorsList(b *testing.B) {
