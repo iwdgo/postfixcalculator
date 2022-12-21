@@ -19,6 +19,7 @@ const (
 type Rpn func(s string) float64
 
 // Common tests
+
 func PanicRightOperand(t *testing.T, RPN Rpn) {
 	defer func() {
 		if r := recover(); r == nil {
