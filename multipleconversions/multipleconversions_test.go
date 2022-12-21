@@ -2,29 +2,29 @@ package multipleconversions
 
 import (
 	"fmt"
-	values "github.com/iwdgo/postfixcalculator/common"
+	"github.com/iwdgo/postfixcalculator/common"
 	"testing"
 )
 
 func ExampleRPN() {
-	fmt.Printf("%f", RPN(values.RPNInput))
+	fmt.Printf("%f", RPN(common.RPNInput))
 	// Output: 30.000000
 }
 
 func ExampleRPN_exp() {
-	fmt.Printf("%.13f", RPN(values.Input))
+	fmt.Printf("%.13f", RPN(common.Input))
 	// Output: 3.0001220703125
 }
 
 func TestRPN(t *testing.T) {
-	if got := RPN(values.RPNInput); got != values.RPNInputWant {
-		t.Errorf("RPN(%s): got %f, want %f", values.Input, got, values.RPNInputWant)
+	if got := RPN(common.RPNInput); got != common.RPNInputWant {
+		t.Errorf("RPN(%s): got %f, want %f", common.Input, got, common.RPNInputWant)
 	}
 
 }
 
 func TestOneOperand(t *testing.T) {
-	values.OneOperand(t, RPN)
+	common.OneOperand(t, RPN)
 }
 
 func TestOneOperator(t *testing.T) {
@@ -37,11 +37,11 @@ func TestOneOperator(t *testing.T) {
 }
 
 func TestPanicOperator(t *testing.T) {
-	values.PanicOperator(t, RPN)
+	common.PanicOperator(t, RPN)
 }
 
 func BenchmarkRPN(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		RPN(values.Input)
+		RPN(common.Input)
 	}
 }

@@ -1,24 +1,24 @@
 package turingmachine
 
 import (
-	values "github.com/iwdgo/postfixcalculator/common"
+	"github.com/iwdgo/postfixcalculator/common"
 	"testing"
 )
 
 func TestRPNTuringMachine(t *testing.T) {
-	if got := RPNTuringMachine(values.RPNInput); got != values.RPNInputWant {
-		t.Errorf("RPN(%s): got %f, want %f", values.Input, got, values.RPNInputWant)
+	if got := RPNTuringMachine(common.RPNInput); got != common.RPNInputWant {
+		t.Errorf("RPN(%s): got %f, want %f", common.Input, got, common.RPNInputWant)
 	}
 }
 
 func TestOneOperand(t *testing.T) {
 	t.Skip("one operand is incorrectly handled")
-	values.OneOperand(t, RPNTuringMachine)
+	common.OneOperand(t, RPNTuringMachine)
 }
 
 func TestPanicOperator(t *testing.T) {
 	t.Skip("Panics on operand error and not unknown operator")
-	values.PanicOperator(t, RPNTuringMachine)
+	common.PanicOperator(t, RPNTuringMachine)
 }
 
 func TestNoOperator(t *testing.T) {
@@ -29,19 +29,19 @@ func TestNoOperator(t *testing.T) {
 
 func TestOneInvalidOperator(t *testing.T) {
 	t.Skip("does not panic but returns 0")
-	values.OneInvalidOperator(t, RPNTuringMachine)
+	common.OneInvalidOperator(t, RPNTuringMachine)
 }
 
 func TestPanicLeftOperand(t *testing.T) {
-	values.PanicLeftOperand(t, RPNTuringMachine)
+	common.PanicLeftOperand(t, RPNTuringMachine)
 }
 
 func TestPanicRightOperand(t *testing.T) {
-	values.PanicRightOperand(t, RPNTuringMachine)
+	common.PanicRightOperand(t, RPNTuringMachine)
 }
 
 func BenchmarkRPNTuringMachine(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		RPNTuringMachine(values.Input)
+		RPNTuringMachine(common.Input)
 	}
 }

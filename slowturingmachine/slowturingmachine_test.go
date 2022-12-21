@@ -2,41 +2,41 @@ package slowturingmachine
 
 import (
 	"fmt"
-	values "github.com/iwdgo/postfixcalculator/common"
+	"github.com/iwdgo/postfixcalculator/common"
 	"testing"
 )
 
 func ExampleRPNSlowTuringMachine() {
-	fmt.Printf("%f", RPNSlowTuringMachine(values.RPNInput))
+	fmt.Printf("%f", RPNSlowTuringMachine(common.RPNInput))
 	// Output: 30.000000
 }
 
 func ExampleRPNSlowTuringMachine_exp() {
-	fmt.Printf("%.13f", RPNSlowTuringMachine(values.Input))
+	fmt.Printf("%.13f", RPNSlowTuringMachine(common.Input))
 	// Output: 3.0001220703125
 }
 
 func TestRPNSlowTuringMachine(t *testing.T) {
-	if got := RPNSlowTuringMachine(values.RPNInput); got != values.RPNInputWant {
-		t.Errorf("RPN(%s): got %f, want %f", values.RPNInput, got, values.RPNInputWant)
+	if got := RPNSlowTuringMachine(common.RPNInput); got != common.RPNInputWant {
+		t.Errorf("RPN(%s): got %f, want %f", common.RPNInput, got, common.RPNInputWant)
 	}
 }
 
 func TestPanicLeftOperand(t *testing.T) {
-	values.PanicLeftOperand(t, RPNSlowTuringMachine)
+	common.PanicLeftOperand(t, RPNSlowTuringMachine)
 }
 
 func TestPanicRightOperand(t *testing.T) {
-	values.PanicRightOperand(t, RPNSlowTuringMachine)
+	common.PanicRightOperand(t, RPNSlowTuringMachine)
 }
 
 func TestOneOperand(t *testing.T) {
 	t.Skip("one operand is incorrectly handled")
-	values.OneOperand(t, RPNSlowTuringMachine)
+	common.OneOperand(t, RPNSlowTuringMachine)
 }
 
 func BenchmarkRPNSlowTuringMachine(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		RPNSlowTuringMachine(values.Input)
+		RPNSlowTuringMachine(common.Input)
 	}
 }

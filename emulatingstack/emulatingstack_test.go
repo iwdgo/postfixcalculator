@@ -2,23 +2,23 @@ package emulatingstack
 
 import (
 	"fmt"
-	values "github.com/iwdgo/postfixcalculator/common"
+	"github.com/iwdgo/postfixcalculator/common"
 	"testing"
 )
 
 func ExampleRPNEmulatingStack() {
-	fmt.Printf("%f", RPNEmulatingStack(values.RPNInput))
+	fmt.Printf("%f", RPNEmulatingStack(common.RPNInput))
 	// Output: 30.000000
 }
 
 func ExampleRPNEmulatingStack_exp() {
-	fmt.Printf("%.13f", RPNEmulatingStack(values.Input))
+	fmt.Printf("%.13f", RPNEmulatingStack(common.Input))
 	// Output: 3.0001220703125
 }
 
 func TestRPNEmulatingStack(t *testing.T) {
-	if got := RPNEmulatingStack(values.Input); got != values.InputWant {
-		t.Fatalf("RPN(%s): got %f, want %f", values.Input, got, values.InputWant)
+	if got := RPNEmulatingStack(common.Input); got != common.InputWant {
+		t.Fatalf("RPN(%s): got %f, want %f", common.Input, got, common.InputWant)
 	}
 }
 
@@ -29,28 +29,28 @@ func TestRPNEmulatingStack_panic(t *testing.T) {
 			t.Error("The code did not panic")
 		}
 	}()
-	_ = RPNEmulatingStack(values.InvalidInput)
+	_ = RPNEmulatingStack(common.InvalidInput)
 }
 
 func TestOneOperand(t *testing.T) {
-	values.OneOperand(t, RPNEmulatingStack)
+	common.OneOperand(t, RPNEmulatingStack)
 }
 
 func TestPanicOperator(t *testing.T) {
 	t.Skip("Panics on operand error and not unknown operator")
-	values.PanicOperator(t, RPNEmulatingStack)
+	common.PanicOperator(t, RPNEmulatingStack)
 }
 
 func TestPanicLeftOperand(t *testing.T) {
-	values.PanicLeftOperand(t, RPNEmulatingStack)
+	common.PanicLeftOperand(t, RPNEmulatingStack)
 }
 
 func TestPanicRightOperand(t *testing.T) {
-	values.PanicRightOperand(t, RPNEmulatingStack)
+	common.PanicRightOperand(t, RPNEmulatingStack)
 }
 
 func BenchmarkRPNEmulatingStack(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		RPNEmulatingStack(values.Input)
+		RPNEmulatingStack(common.Input)
 	}
 }
