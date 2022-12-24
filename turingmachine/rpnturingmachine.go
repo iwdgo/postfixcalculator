@@ -14,8 +14,7 @@ import (
 // Both ? and num are reserved keywords.
 // Method will panic on failed conversions or unknown operators.
 func RPNTuringMachine(RPNInput string) float64 {
-	// A slice of words contains the expression. A processed operator is erased by replacing
-	// it with ? in the expression. Similarly, a converted number is erased using 'num'.
+	// A slice of words contains the expression.
 	words := strings.Fields(RPNInput)
 	// A slice of floats contains the values to avoid repeating conversion and words.
 	numbers := make([]float64, len(words))
@@ -41,7 +40,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 				panic("Invalid right operand")
 			}
-			// Conversion done
+			// Mark operand as converted in band
 			words[i] = "num"
 			break
 		}
@@ -53,7 +52,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// Binary operator
 			// Copying value
 			ro = numbers[i]
-			// Erase operator in expression
+			// Number is consumed
 			words[i] = "?"
 			i--
 			// You cannot range from max to min of index
@@ -69,7 +68,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 					panic("Invalid left operand")
 				}
-				// Conversion done
+				// Mark operand as converted in band. It will hold the result of the operator.
 				words[i] = "num"
 				break
 			}
@@ -89,7 +88,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				panic("Invalid operator : " + w)
 			}
 		}
-		// Complete erasure
+		// Mark operation as complete
 		words[index] = "?"
 		// Re-start for loop without break, nor while style. ()
 		index = 0
