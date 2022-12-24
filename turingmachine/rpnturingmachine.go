@@ -25,63 +25,64 @@ func RPNTuringMachine(RPNInput string) float64 {
 	i, ro := 0, 0.0
 	var err error
 	for index, w := range words {
-		if strings.Contains(values.OperatorsList, w) {
-			// At least one operand is expected in a preceding place.
-			i = index - 1
+		if !strings.Contains(values.OperatorsList, w) {
+			continue
+		}
+		// At least one operand is expected in a preceding place.
+		i = index - 1
+		for words[i] != "num" {
+			// if word is ?, no number there, move before
+			if words[i] == "?" {
+				i--
+			} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
+				panic("Invalid right operand")
+			} else {
+				// Conversion done
+				words[i] = "num"
+			}
+		}
+		// w is an operator and empty cells are skipped
+		if w == "sqrt" {
+			// Unary operator
+			numbers[i] = math.Sqrt(numbers[i])
+		} else {
+			// Binary operator
+			// Copying value
+			ro = numbers[i]
+			// Erase operator in expression
+			words[i] = "?"
+			i--
+			// You cannot range from max to min of index
 			for words[i] != "num" {
-				// if word is ?, no number there, move before
 				if words[i] == "?" {
 					i--
 				} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-					panic("Invalid right operand")
+					panic("Invalid left operand")
 				} else {
 					// Conversion done
 					words[i] = "num"
 				}
 			}
-			// w is an operator and empty cells are skipped
-			if w == "sqrt" {
-				// Unary operator
-				numbers[i] = math.Sqrt(numbers[i])
-			} else {
-				// Binary operator
-				// Copying value
-				ro = numbers[i]
-				// Erase operator in expression
-				words[i] = "?"
-				i--
-				// You cannot range from max to min of index
-				for words[i] != "num" {
-					if words[i] == "?" {
-						i--
-					} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-						panic("Invalid left operand")
-					} else {
-						// Conversion done
-						words[i] = "num"
-					}
-				}
-				switch w {
-				case "+":
-					numbers[i] += ro
-				case "-":
-					numbers[i] -= ro
-				case "*":
-					numbers[i] *= ro
-				case "/":
-					numbers[i] /= ro
-				case "^":
-					numbers[i] = math.Pow(numbers[i], ro)
-				default:
-					// TODO Never reached as no known operator was found
-					panic("Invalid operator : " + w)
-				}
+			switch w {
+			case "+":
+				numbers[i] += ro
+			case "-":
+				numbers[i] -= ro
+			case "*":
+				numbers[i] *= ro
+			case "/":
+				numbers[i] /= ro
+			case "^":
+				numbers[i] = math.Pow(numbers[i], ro)
+			default:
+				// TODO Never reached as no known operator was found
+				panic("Invalid operator : " + w)
 			}
-			// Complete erasure
-			words[index] = "?"
-			// Re-start for loop without break, nor while style. ()
-			index = 0
 		}
+		// Complete erasure
+		words[index] = "?"
+		// Re-start for loop without break, nor while style. ()
+		index = 0
 	}
 	return numbers[0]
 }
