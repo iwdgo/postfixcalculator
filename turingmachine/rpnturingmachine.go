@@ -29,13 +29,13 @@ func RPNTuringMachine(RPNInput string) float64 {
 		// At least one operand is expected in a preceding place.
 		i = index - 1
 		for {
+			if words[i] == "num" {
+				break
+			}
 			// if word is ?, no number there, move before
 			if words[i] == "?" {
 				i--
 				continue
-			}
-			if words[i] == "num" {
-				break
 			}
 			if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 				panic("Invalid right operand")
@@ -55,15 +55,13 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// Number is consumed
 			words[i] = "?"
 			i--
-			// You cannot range from max to min of index
 			for {
-				// if word is ?, no number there, move before
+				if words[i] == "num" {
+					break
+				}
 				if words[i] == "?" {
 					i--
 					continue
-				}
-				if words[i] == "num" {
-					break
 				}
 				if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 					panic("Invalid left operand")
