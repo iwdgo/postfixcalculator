@@ -2,6 +2,7 @@
 package turingmachine
 
 import (
+	"fmt"
 	values "github.com/iwdgo/postfixcalculator/common"
 	"math"
 	"strconv"
@@ -38,7 +39,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				continue
 			}
 			if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-				panic("Invalid right operand")
+				panic(fmt.Sprintf("Invalid right operand: %s", w))
 			}
 			// Mark operand as converted in band
 			words[i] = "num"
@@ -64,7 +65,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 					continue
 				}
 				if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-					panic("Invalid left operand")
+					panic(fmt.Sprintf("Invalid left operand: %s", w))
 				}
 				// Mark operand as converted in band. It will hold the result of the operator.
 				words[i] = "num"
@@ -83,7 +84,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				numbers[i] = math.Pow(numbers[i], ro)
 			default:
 				// TODO Never reached as no known operator was found
-				panic("Invalid operator : " + w)
+				panic(fmt.Sprintf("Invalid operator: %s", w))
 			}
 		}
 		// Mark operation as complete
