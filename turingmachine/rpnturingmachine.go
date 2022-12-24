@@ -29,16 +29,21 @@ func RPNTuringMachine(RPNInput string) float64 {
 		}
 		// At least one operand is expected in a preceding place.
 		i = index - 1
-		for words[i] != "num" {
+		for {
 			// if word is ?, no number there, move before
 			if words[i] == "?" {
 				i--
-			} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-				panic("Invalid right operand")
-			} else {
-				// Conversion done
-				words[i] = "num"
+				continue
 			}
+			if words[i] == "num" {
+				break
+			}
+			if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
+				panic("Invalid right operand")
+			}
+			// Conversion done
+			words[i] = "num"
+			break
 		}
 		// w is an operator and empty cells are skipped
 		if w == "sqrt" {
@@ -52,15 +57,21 @@ func RPNTuringMachine(RPNInput string) float64 {
 			words[i] = "?"
 			i--
 			// You cannot range from max to min of index
-			for words[i] != "num" {
+			for {
+				// if word is ?, no number there, move before
 				if words[i] == "?" {
 					i--
-				} else if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-					panic("Invalid left operand")
-				} else {
-					// Conversion done
-					words[i] = "num"
+					continue
 				}
+				if words[i] == "num" {
+					break
+				}
+				if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
+					panic("Invalid left operand")
+				}
+				// Conversion done
+				words[i] = "num"
+				break
 			}
 			switch w {
 			case "+":
