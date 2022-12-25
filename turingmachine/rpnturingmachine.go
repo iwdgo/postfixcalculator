@@ -29,10 +29,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 		}
 		// At least one operand is expected in a preceding place.
 		i = index - 1
-		for {
-			if words[i] == "num" {
-				break
-			}
+		for words[i] != "num" {
 			// if word is ?, no number there, move before
 			if words[i] == "?" {
 				i--
@@ -43,7 +40,6 @@ func RPNTuringMachine(RPNInput string) float64 {
 			}
 			// Mark operand as converted in band
 			words[i] = "num"
-			break
 		}
 		// w is an operator and empty cells are skipped
 		if w == "sqrt" {
@@ -56,10 +52,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// Number is consumed
 			words[i] = "?"
 			i--
-			for {
-				if words[i] == "num" {
-					break
-				}
+			for words[i] != "num" {
 				if words[i] == "?" {
 					i--
 					continue
@@ -69,7 +62,6 @@ func RPNTuringMachine(RPNInput string) float64 {
 				}
 				// Mark operand as converted in band. It will hold the result of the operator.
 				words[i] = "num"
-				break
 			}
 			switch w {
 			case "+":
