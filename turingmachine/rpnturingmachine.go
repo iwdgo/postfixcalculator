@@ -3,7 +3,6 @@ package turingmachine
 
 import (
 	"fmt"
-	values "github.com/iwdgo/postfixcalculator/common"
 	"math"
 	"strconv"
 	"strings"
@@ -24,7 +23,16 @@ func RPNTuringMachine(RPNInput string) float64 {
 	i, ro := 0, 0.0
 	var err error
 	for index, w := range words {
-		if !strings.Contains(values.OperatorsList, w) {
+		// Move on the band until an operator is found
+		switch w {
+		case "sqrt":
+		case "+":
+		case "-":
+		case "*":
+		case "/":
+		case "^":
+			break
+		default:
 			continue
 		}
 		// At least one operand is expected in a preceding place.
@@ -43,11 +51,11 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// Mark operand as converted in band
 			words[i] = "num"
 		}
-		// w is an operator and empty cells are skipped
-		if w == "sqrt" {
+		switch w {
+		case "sqrt":
 			// Unary operator
 			numbers[i] = math.Sqrt(numbers[i])
-		} else {
+		default:
 			// Binary operator
 			// Copying value
 			ro = numbers[i]
@@ -79,7 +87,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			case "^":
 				numbers[i] = math.Pow(numbers[i], ro)
 			default:
-				// TODO Never reached as no known operator was found
+				// TODO Never reached as no unknown operator can arrive here
 				panic(fmt.Sprintf("Invalid operator: %s", w))
 			}
 		}
