@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/iwdgo/postfixcalculator/branch/master/graph/badge.svg)](https://codecov.io/gh/iWdGo/postfixcalculator)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/pnnlu9oovyo71d6q?svg=true)](https://ci.appveyor.com/project/iWdGo/postfixcalculator)
-![GitHub](https://github.com/iwdgo/postfixcalculator/workflows/GitHub/badge.svg)
+[![Go](https://github.com/iwdgo/postfixcalculator/actions/workflows/go.yml/badge.svg)](https://github.com/iwdgo/postfixcalculator/actions/workflows/go.yml)
 
 # Reverse Polish Notation calculator
 
