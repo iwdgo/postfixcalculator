@@ -19,8 +19,8 @@ func RPNTuringMachine(RPNInput string) float64 {
 	// A slice of floats contains the values to avoid repeating conversion and words.
 	numbers := make([]float64, len(words))
 	// i is the index in the current operation
-	// ro is the value of the right operand
-	i, ro := 0, 0.0
+	// lo and ro hold values of left and right operand as writing to the slice is more expensive
+	i, ro, lo := 0, 0.0, 0.0
 	var err error
 	for index, w := range words {
 		// Move on the band until an operator is found
@@ -62,30 +62,35 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// Binary operator
 			words[i] = "?"
 			i--
-			for words[i] != "num" {
+			for {
+				if words[i] == "num" {
+					lo = numbers[i]
+					break
+				}
 				if words[i] == "?" {
 					i--
 					continue
 				}
-				if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
+				if lo, err = strconv.ParseFloat(words[i], 64); err != nil {
 					fmt.Printf("%v\n", words)
 					fmt.Printf("%v\n", numbers)
 					panic(fmt.Sprintf("Invalid left operand: %s", w))
 				}
 				// Mark operand as converted in band. It will hold the result of the operator.
 				words[i] = "num"
+				break
 			}
 			switch w {
 			case "+":
-				numbers[i] += ro
+				numbers[i] = lo + ro
 			case "-":
-				numbers[i] -= ro
+				numbers[i] = lo - ro
 			case "*":
-				numbers[i] *= ro
+				numbers[i] = lo * ro
 			case "/":
-				numbers[i] /= ro
+				numbers[i] = lo / ro
 			case "^":
-				numbers[i] = math.Pow(numbers[i], ro)
+				numbers[i] = math.Pow(lo, ro)
 			default:
 				// TODO Never reached as no unknown operator can arrive here
 				panic(fmt.Sprintf("Invalid operator: %s", w))
