@@ -35,31 +35,31 @@ func RPNTuringMachine(RPNInput string) float64 {
 		default:
 			continue
 		}
-		// At least one operand is expected in a preceding place.
 		i = index - 1
-		for words[i] != "num" {
-			// if word is ?, no number there, move before
+		// Load ro with right operand
+		for {
+			if words[i] == "num" {
+				ro = numbers[i]
+				break
+			}
 			if words[i] == "?" {
 				i--
 				continue
 			}
-			if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
+			if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
 				fmt.Printf("%v\n", words)
 				fmt.Printf("%v\n", numbers)
 				panic(fmt.Sprintf("Invalid right operand: %s", w))
 			}
-			// Mark operand as converted in band
-			words[i] = "num"
+			break
 		}
 		switch w {
 		case "sqrt":
 			// Unary operator
-			numbers[i] = math.Sqrt(numbers[i])
+			numbers[i] = math.Sqrt(ro)
+			words[i] = "num"
 		default:
 			// Binary operator
-			// Copying value
-			ro = numbers[i]
-			// Number is consumed
 			words[i] = "?"
 			i--
 			for words[i] != "num" {
