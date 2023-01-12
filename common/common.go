@@ -7,10 +7,7 @@ import (
 
 const OperatorsList = "+ - * / ^ sqrt"
 
-const (
-	Input        = "3 4 2 * 1 5 - 2 3 ^ ^ / +"   //= 3.0001220703125
-	InvalidInput = "3 4 2 * ? 1 5 - 2 3 ^ ^ / +" // No value
-)
+const Input = "3 4 2 * 1 5 - 2 3 ^ ^ / +" //= 3.0001220703125
 
 type Rpn func(s string) float64
 
@@ -58,4 +55,22 @@ func PanicOperator(t *testing.T, RPN Rpn) {
 		}
 	}()
 	_ = RPN("3 4 o") // o is not a known operator
+}
+
+func PanicReservedSign(t *testing.T, RPN Rpn) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatalf("The code did not panic for %v", RPN)
+		}
+	}()
+	_ = RPN("2 3 4 + ?") // ? is reserved
+}
+
+func PanicReservedMark(t *testing.T, RPN Rpn) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatalf("The code did not panic for %v", RPN)
+		}
+	}()
+	_ = RPN("2 3 4 + num") // ? is reserved
 }

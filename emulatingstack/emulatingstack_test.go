@@ -5,13 +5,12 @@ import (
 	"testing"
 )
 
-func TestRPNEmulatingStack_panic(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Error("The code did not panic")
-		}
-	}()
-	_ = RPNEmulatingStack(common.InvalidInput)
+func TestRPNEmulatingStack_reservedsign(t *testing.T) {
+	common.PanicReservedSign(t, RPNEmulatingStack)
+}
+
+func TestRPNEmulatingStack_reservedmark(t *testing.T) {
+	common.PanicReservedMark(t, RPNEmulatingStack)
 }
 
 func TestOneOperand(t *testing.T) {
