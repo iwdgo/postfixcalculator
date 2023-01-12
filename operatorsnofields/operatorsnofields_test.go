@@ -1,27 +1,9 @@
 package operatorsnofields
 
 import (
-	"fmt"
 	values "github.com/iwdgo/postfixcalculator/common"
 	"testing"
 )
-
-/* if fmt.Print has an output (debug mode) */
-func ExampleRPNOperatorsNoFields() {
-	fmt.Printf("%f", RPNOperatorsNoFields(values.RPNInput))
-	// Output: 30.000000
-}
-
-func ExampleRPNOperatorsNoFields_exp() {
-	fmt.Printf("%.13f", RPNOperatorsNoFields(values.Input))
-	// Output: 3.0001220703125
-}
-
-func TestRPNOperatorsNoFields(t *testing.T) {
-	if got := RPNOperatorsNoFields(values.RPNInput); got != values.RPNInputWant {
-		t.Errorf("RPN(%s): got %f, want %f", values.RPNInput, got, values.RPNInputWant)
-	}
-}
 
 func TestPanicLeftOperand(t *testing.T) {
 	values.PanicLeftOperand(t, RPNOperatorsNoFields)

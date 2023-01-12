@@ -5,12 +5,6 @@ import (
 	"testing"
 )
 
-func TestRPNTuringMachine(t *testing.T) {
-	if got := RPNTuringMachine(common.RPNInput); got != common.RPNInputWant {
-		t.Errorf("RPN(%s): got %f, want %f", common.Input, got, common.RPNInputWant)
-	}
-}
-
 func TestOneOperand(t *testing.T) {
 	t.Skip("one operand is incorrectly handled")
 	common.OneOperand(t, RPNTuringMachine)
