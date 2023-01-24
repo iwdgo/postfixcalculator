@@ -1,4 +1,4 @@
-[![Go Reference](https://pkg.go.dev/badge/github.com/iwdgo/postfixcalculator.svg)](https://pkg.go.dev/iwdgo/postfixcalculator)
+[![Go Reference](https://pkg.go.dev/badge/github.com/iwdgo/postfixcalculator.svg)](https://pkg.go.dev/github.com/iwdgo/postfixcalculator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/iwdgo/postfixcalculator)](https://goreportcard.com/report/github.com/iwdgo/postfixcalculator)
 [![codecov](https://codecov.io/gh/iwdgo/postfixcalculator/branch/master/graph/badge.svg)](https://codecov.io/gh/iWdGo/postfixcalculator)
 
