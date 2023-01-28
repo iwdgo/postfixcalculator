@@ -26,6 +26,29 @@ func RPNTuringMachine(RPNInput string) float64 {
 		// Move on the band until an operator is found
 		switch w {
 		case "sqrt":
+			// Unary operator
+			for i = index - 1; i > 0; i-- {
+				if words[i] == "num" {
+					numbers[i] = math.Sqrt(numbers[i])
+					break
+				}
+				if words[i] == "?" {
+					continue
+				}
+				if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
+					fmt.Printf("%v\n", words)
+					fmt.Printf("%v\n", numbers)
+					panic(fmt.Sprintf("Invalid unique operand: %s", words[i]))
+				}
+				numbers[i] = math.Sqrt(ro)
+				words[i] = "num"
+				break
+			}
+			// Mark operation as complete
+			words[index] = "?"
+			// Re-start for loop without break, nor while style. ()
+			index = 0
+			continue
 		case "+":
 		case "-":
 		case "*":
@@ -53,48 +76,41 @@ func RPNTuringMachine(RPNInput string) float64 {
 			}
 			break
 		}
-		switch w {
-		case "sqrt":
-			// Unary operator
-			numbers[i] = math.Sqrt(ro)
-			words[i] = "num"
-		default:
-			// Binary operator
-			words[i] = "?"
-			i--
-			for {
-				if words[i] == "num" {
-					lo = numbers[i]
-					break
-				}
-				if words[i] == "?" {
-					i--
-					continue
-				}
-				if lo, err = strconv.ParseFloat(words[i], 64); err != nil {
-					fmt.Printf("%v\n", words)
-					fmt.Printf("%v\n", numbers)
-					panic(fmt.Sprintf("Invalid left operand: %s", words[i]))
-				}
-				// Mark operand as converted in band. It will hold the result of the operator.
-				words[i] = "num"
+		// Binary operator
+		words[i] = "?"
+		i--
+		for {
+			if words[i] == "num" {
+				lo = numbers[i]
 				break
 			}
-			switch w {
-			case "+":
-				numbers[i] = lo + ro
-			case "-":
-				numbers[i] = lo - ro
-			case "*":
-				numbers[i] = lo * ro
-			case "/":
-				numbers[i] = lo / ro
-			case "^":
-				numbers[i] = math.Pow(lo, ro)
-			default:
-				// TODO Never reached as no unknown operator can arrive here
-				panic(fmt.Sprintf("Invalid operator: %s", w))
+			if words[i] == "?" {
+				i--
+				continue
 			}
+			if lo, err = strconv.ParseFloat(words[i], 64); err != nil {
+				fmt.Printf("%v\n", words)
+				fmt.Printf("%v\n", numbers)
+				panic(fmt.Sprintf("Invalid left operand: %s", words[i]))
+			}
+			// Mark operand as converted in band. It will hold the result of the operator.
+			words[i] = "num"
+			break
+		}
+		switch w {
+		case "+":
+			numbers[i] = lo + ro
+		case "-":
+			numbers[i] = lo - ro
+		case "*":
+			numbers[i] = lo * ro
+		case "/":
+			numbers[i] = lo / ro
+		case "^":
+			numbers[i] = math.Pow(lo, ro)
+		default:
+			// TODO Never reached as no unknown operator can arrive here
+			panic(fmt.Sprintf("Invalid operator: %s", w))
 		}
 		// Mark operation as complete
 		words[index] = "?"
