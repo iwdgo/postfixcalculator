@@ -49,7 +49,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
 				fmt.Printf("%v\n", words)
 				fmt.Printf("%v\n", numbers)
-				panic(fmt.Sprintf("Invalid right operand: %s", w))
+				panic(fmt.Sprintf("Invalid right operand: %s", words[i]))
 			}
 			break
 		}
@@ -74,7 +74,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				if lo, err = strconv.ParseFloat(words[i], 64); err != nil {
 					fmt.Printf("%v\n", words)
 					fmt.Printf("%v\n", numbers)
-					panic(fmt.Sprintf("Invalid left operand: %s", w))
+					panic(fmt.Sprintf("Invalid left operand: %s", words[i]))
 				}
 				// Mark operand as converted in band. It will hold the result of the operator.
 				words[i] = "num"
