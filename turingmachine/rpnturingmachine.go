@@ -25,6 +25,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 	for index, w := range words {
 		// Move on the band until an operator is found
 		switch w {
+		case "?", "num": // Ignore explicitly reserved words
 		case "sqrt":
 			// Unary operator
 			for i = index - 1; i > 0; i-- {
@@ -48,74 +49,66 @@ func RPNTuringMachine(RPNInput string) float64 {
 			words[index] = "?"
 			// Re-start for loop without break, nor while style. ()
 			index = 0
-			continue
-		case "+":
-		case "-":
-		case "*":
-		case "/":
-		case "^":
-			break
-		default:
-			continue
-		}
-		i = index - 1
-		// Load ro with right operand
-		for {
-			if words[i] == "num" {
-				ro = numbers[i]
+		case "+", "-", "*", "/", "^":
+			i = index - 1
+			// Load ro with right operand
+			for {
+				if words[i] == "num" {
+					ro = numbers[i]
+					break
+				}
+				if words[i] == "?" {
+					i--
+					continue
+				}
+				if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
+					fmt.Printf("%v\n", words)
+					fmt.Printf("%v\n", numbers)
+					panic(fmt.Sprintf("Invalid right operand: %s", words[i]))
+				}
 				break
 			}
-			if words[i] == "?" {
-				i--
-				continue
-			}
-			if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
-				fmt.Printf("%v\n", words)
-				fmt.Printf("%v\n", numbers)
-				panic(fmt.Sprintf("Invalid right operand: %s", words[i]))
-			}
-			break
-		}
-		// Binary operator
-		words[i] = "?"
-		i--
-		for {
-			if words[i] == "num" {
-				lo = numbers[i]
+			// Binary operator
+			words[i] = "?"
+			i--
+			for {
+				if words[i] == "num" {
+					lo = numbers[i]
+					break
+				}
+				if words[i] == "?" {
+					i--
+					continue
+				}
+				if lo, err = strconv.ParseFloat(words[i], 64); err != nil {
+					fmt.Printf("%v\n", words)
+					fmt.Printf("%v\n", numbers)
+					panic(fmt.Sprintf("Invalid left operand: %s", words[i]))
+				}
+				// Mark operand as converted in band. It will hold the result of the operator.
+				words[i] = "num"
 				break
 			}
-			if words[i] == "?" {
-				i--
-				continue
+			switch w {
+			case "+":
+				numbers[i] = lo + ro
+			case "-":
+				numbers[i] = lo - ro
+			case "*":
+				numbers[i] = lo * ro
+			case "/":
+				numbers[i] = lo / ro
+			case "^":
+				numbers[i] = math.Pow(lo, ro)
+			default:
+				// TODO Never reached as no unknown operator can arrive here
+				panic(fmt.Sprintf("Invalid operator: %s", w))
 			}
-			if lo, err = strconv.ParseFloat(words[i], 64); err != nil {
-				fmt.Printf("%v\n", words)
-				fmt.Printf("%v\n", numbers)
-				panic(fmt.Sprintf("Invalid left operand: %s", words[i]))
-			}
-			// Mark operand as converted in band. It will hold the result of the operator.
-			words[i] = "num"
-			break
+			// Mark operation as complete
+			words[index] = "?"
+			// Re-start for loop without break, nor while style. ()
+			index = 0
 		}
-		switch w {
-		case "+":
-			numbers[i] = lo + ro
-		case "-":
-			numbers[i] = lo - ro
-		case "*":
-			numbers[i] = lo * ro
-		case "/":
-			numbers[i] = lo / ro
-		case "^":
-			numbers[i] = math.Pow(lo, ro)
-		default:
-			// TODO Never reached as no unknown operator can arrive here
-			panic(fmt.Sprintf("Invalid operator: %s", w))
-		}
-		// Mark operation as complete
-		words[index] = "?"
-		// Re-start for loop without break, nor while style. ()
-		index = 0
 	}
 	return numbers[0]
 }
