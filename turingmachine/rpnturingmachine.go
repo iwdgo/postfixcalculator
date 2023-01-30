@@ -21,6 +21,11 @@ func RPNTuringMachine(RPNInput string) float64 {
 	// i is the index in the current operation
 	// lo and ro hold values of left and right operand as writing to the slice is more expensive
 	i, ro, lo := 0, 0.0, 0.0
+	searchOperand := func() {
+		for i > 0 && words[i] == "?" {
+			i--
+		}
+	}
 	var err error
 	for index, w := range words {
 		// Move on the band until an operator is found
@@ -29,9 +34,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 		case "sqrt":
 			// Unary operator
 			i = index - 1
-			for i > 0 && words[i] == "?" {
-				i--
-			}
+			searchOperand()
 			if words[i] == "num" {
 				numbers[i] = math.Sqrt(numbers[i])
 			} else {
@@ -49,9 +52,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			index = 0
 		case "+", "-", "*", "/", "^":
 			i = index - 1
-			for i > 0 && words[i] == "?" {
-				i--
-			}
+			searchOperand()
 			// Load ro with right operand
 			if words[i] == "num" {
 				ro = numbers[i]
@@ -65,9 +66,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// Binary operator
 			words[i] = "?"
 			i--
-			for i > 0 && words[i] == "?" {
-				i--
-			}
+			searchOperand()
 			if words[i] == "num" {
 				lo = numbers[i]
 			} else {
