@@ -20,14 +20,21 @@ func RPNTuringMachine(RPNInput string) float64 {
 	numbers := make([]float64, len(words))
 	// i is the index in the current operation
 	// lo and ro hold values of left and right operand as writing to the slice is more expensive
-	i, ro, lo := 0, 0.0, 0.0
+	i, index, ro, lo := 0, 0, 0.0, 0.0
+	var w string
 	searchOperand := func() {
 		for i > 0 && words[i] == "?" {
 			i--
 		}
 	}
+	operationComplete := func() {
+		// Mark operation as complete
+		words[index] = "?"
+		// Re-start for loop without break, nor while style. ()
+		index = 0
+	}
 	var err error
-	for index, w := range words {
+	for index, w = range words {
 		// Move on the band until an operator is found
 		switch w {
 		case "?", "num": // Ignore explicitly reserved words
@@ -46,10 +53,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				numbers[i] = math.Sqrt(ro)
 				words[i] = "num"
 			}
-			// Mark operation as complete
-			words[index] = "?"
-			// Re-start for loop without break, nor while style. ()
-			index = 0
+			operationComplete()
 		case "+", "-", "*", "/", "^":
 			i = index - 1
 			searchOperand()
@@ -93,10 +97,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				// TODO Never reached as no unknown operator can arrive here
 				panic(fmt.Sprintf("Invalid operator: %s", w))
 			}
-			// Mark operation as complete
-			words[index] = "?"
-			// Re-start for loop without break, nor while style. ()
-			index = 0
+			operationComplete()
 		}
 	}
 	return numbers[0]
