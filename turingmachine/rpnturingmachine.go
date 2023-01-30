@@ -28,14 +28,13 @@ func RPNTuringMachine(RPNInput string) float64 {
 		case "?", "num": // Ignore explicitly reserved words
 		case "sqrt":
 			// Unary operator
-			for i = index - 1; i > 0; i-- {
-				if words[i] == "num" {
-					numbers[i] = math.Sqrt(numbers[i])
-					break
-				}
-				if words[i] == "?" {
-					continue
-				}
+			i = index - 1
+			for i > 0 && words[i] == "?" {
+				i--
+			}
+			if words[i] == "num" {
+				numbers[i] = math.Sqrt(numbers[i])
+			} else {
 				if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
 					fmt.Printf("%v\n", words)
 					fmt.Printf("%v\n", numbers)
@@ -43,7 +42,6 @@ func RPNTuringMachine(RPNInput string) float64 {
 				}
 				numbers[i] = math.Sqrt(ro)
 				words[i] = "num"
-				break
 			}
 			// Mark operation as complete
 			words[index] = "?"
@@ -51,35 +49,28 @@ func RPNTuringMachine(RPNInput string) float64 {
 			index = 0
 		case "+", "-", "*", "/", "^":
 			i = index - 1
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			// Load ro with right operand
-			for {
-				if words[i] == "num" {
-					ro = numbers[i]
-					break
-				}
-				if words[i] == "?" {
-					i--
-					continue
-				}
+			if words[i] == "num" {
+				ro = numbers[i]
+			} else {
 				if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
 					fmt.Printf("%v\n", words)
 					fmt.Printf("%v\n", numbers)
 					panic(fmt.Sprintf("Invalid right operand: %s", words[i]))
 				}
-				break
 			}
 			// Binary operator
 			words[i] = "?"
 			i--
-			for {
-				if words[i] == "num" {
-					lo = numbers[i]
-					break
-				}
-				if words[i] == "?" {
-					i--
-					continue
-				}
+			for i > 0 && words[i] == "?" {
+				i--
+			}
+			if words[i] == "num" {
+				lo = numbers[i]
+			} else {
 				if lo, err = strconv.ParseFloat(words[i], 64); err != nil {
 					fmt.Printf("%v\n", words)
 					fmt.Printf("%v\n", numbers)
@@ -87,7 +78,6 @@ func RPNTuringMachine(RPNInput string) float64 {
 				}
 				// Mark operand as converted in band. It will hold the result of the operator.
 				words[i] = "num"
-				break
 			}
 			switch w {
 			case "+":
