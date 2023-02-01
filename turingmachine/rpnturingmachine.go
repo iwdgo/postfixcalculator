@@ -42,17 +42,15 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// Unary operator
 			i = index - 1
 			searchOperand()
-			if words[i] == "num" {
-				numbers[i] = math.Sqrt(numbers[i])
-			} else {
-				if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
+			if words[i] != "num" {
+				if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
 					fmt.Printf("%v\n", words)
 					fmt.Printf("%v\n", numbers)
 					panic(fmt.Sprintf("Invalid unique operand: %s", words[i]))
 				}
-				numbers[i] = math.Sqrt(ro)
 				words[i] = "num"
 			}
+			numbers[i] = math.Sqrt(numbers[i])
 			operationComplete()
 		case "+", "-", "*", "/", "^":
 			i = index - 1
