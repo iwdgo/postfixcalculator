@@ -37,7 +37,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 	for index, w = range words {
 		// Move on the band until an operator is found
 		switch w {
-		case "?", "num": // Ignore explicitly reserved words
+		case "?": // Ignore explicitly reserved words
 		case "sqrt":
 			// Unary operator
 			i = index - 1
@@ -91,11 +91,11 @@ func RPNTuringMachine(RPNInput string) float64 {
 			numbers[i] = math.Pow(lo, ro)
 			operationComplete()
 		default:
+			// Not a known operator, it must be an operand
 			if numbers[index], err = strconv.ParseFloat(w, 64); err != nil {
 				fmt.Printf("%v\n%v\n", words, numbers)
 				panic(fmt.Sprintf("Invalid operator or operand: %s", words[i]))
 			}
-			words[index] = "num"
 		}
 	}
 	return numbers[0]
