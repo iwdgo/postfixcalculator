@@ -27,6 +27,10 @@ func RPNTuringMachine(RPNInput string) float64 {
 			i--
 		}
 	}
+	panicParse := func(s string) {
+		fmt.Printf("%v\n%v\n", words, numbers)
+		panic(fmt.Sprintf("Invalid %s operand: %s", s, words[i]))
+	}
 	operationComplete := func() {
 		// Mark operation as complete
 		words[index] = "?"
@@ -44,9 +48,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			searchOperand()
 			if words[i] != "num" {
 				if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-					fmt.Printf("%v\n", words)
-					fmt.Printf("%v\n", numbers)
-					panic(fmt.Sprintf("Invalid unique operand: %s", words[i]))
+					panicParse("unique")
 				}
 				words[i] = "num"
 			}
@@ -60,9 +62,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				ro = numbers[i]
 			} else {
 				if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
-					fmt.Printf("%v\n", words)
-					fmt.Printf("%v\n", numbers)
-					panic(fmt.Sprintf("Invalid right operand: %s", words[i]))
+					panicParse("right")
 				}
 			}
 			// Binary operator
@@ -73,9 +73,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				lo = numbers[i]
 			} else {
 				if lo, err = strconv.ParseFloat(words[i], 64); err != nil {
-					fmt.Printf("%v\n", words)
-					fmt.Printf("%v\n", numbers)
-					panic(fmt.Sprintf("Invalid left operand: %s", words[i]))
+					panicParse("left")
 				}
 				// Mark operand as converted in band. It will hold the result of the operator.
 				words[i] = "num"
