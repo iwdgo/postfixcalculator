@@ -27,10 +27,6 @@ func RPNTuringMachine(RPNInput string) float64 {
 			i--
 		}
 	}
-	panicParse := func(s string) {
-		fmt.Printf("%v\n%v\n", words, numbers)
-		panic(fmt.Sprintf("Invalid %s operand: %s", s, words[i]))
-	}
 	operationComplete := func() {
 		// Mark operation as complete
 		words[index] = "?"
@@ -46,54 +42,60 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// Unary operator
 			i = index - 1
 			searchOperand()
-			if words[i] != "num" {
-				if numbers[i], err = strconv.ParseFloat(words[i], 64); err != nil {
-					panicParse("unique")
-				}
-				words[i] = "num"
-			}
 			numbers[i] = math.Sqrt(numbers[i])
 			operationComplete()
-		case "+", "-", "*", "/", "^":
+		case "+":
 			i = index - 1
 			searchOperand()
-			// Load ro with right operand
-			if words[i] == "num" {
-				ro = numbers[i]
-			} else {
-				if ro, err = strconv.ParseFloat(words[i], 64); err != nil {
-					panicParse("right")
-				}
-			}
-			// Binary operator
+			ro = numbers[i]
 			words[i] = "?"
-			i--
 			searchOperand()
-			if words[i] == "num" {
-				lo = numbers[i]
-			} else {
-				if lo, err = strconv.ParseFloat(words[i], 64); err != nil {
-					panicParse("left")
-				}
-				// Mark operand as converted in band. It will hold the result of the operator.
-				words[i] = "num"
-			}
-			switch w {
-			case "+":
-				numbers[i] = lo + ro
-			case "-":
-				numbers[i] = lo - ro
-			case "*":
-				numbers[i] = lo * ro
-			case "/":
-				numbers[i] = lo / ro
-			case "^":
-				numbers[i] = math.Pow(lo, ro)
-			default:
-				// TODO Never reached as no unknown operator can arrive here
-				panic(fmt.Sprintf("Invalid operator: %s", w))
-			}
+			lo = numbers[i]
+			numbers[i] = lo + ro
 			operationComplete()
+		case "-":
+			i = index - 1
+			searchOperand()
+			ro = numbers[i]
+			words[i] = "?"
+			searchOperand()
+			lo = numbers[i]
+			numbers[i] = lo - ro
+			operationComplete()
+		case "*":
+			i = index - 1
+			searchOperand()
+			ro = numbers[i]
+			words[i] = "?"
+			searchOperand()
+			lo = numbers[i]
+			numbers[i] = lo * ro
+			operationComplete()
+		case "/":
+			i = index - 1
+			searchOperand()
+			ro = numbers[i]
+			words[i] = "?"
+			searchOperand()
+			lo = numbers[i]
+			numbers[i] = lo / ro
+			operationComplete()
+		case "^":
+			// Binary operator
+			i = index - 1
+			searchOperand()
+			ro = numbers[i]
+			words[i] = "?"
+			searchOperand()
+			lo = numbers[i]
+			numbers[i] = math.Pow(lo, ro)
+			operationComplete()
+		default:
+			if numbers[index], err = strconv.ParseFloat(w, 64); err != nil {
+				fmt.Printf("%v\n%v\n", words, numbers)
+				panic(fmt.Sprintf("Invalid operator or operand: %s", words[i]))
+			}
+			words[index] = "num"
 		}
 	}
 	return numbers[0]
