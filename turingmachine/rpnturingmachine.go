@@ -37,7 +37,8 @@ func RPNTuringMachine(RPNInput string) float64 {
 				return numbers[0]
 			}
 			words[index] = "?"
-			index = 0
+			index = i + 1
+		// Binary operators
 		case "+":
 			i = index - 1
 			for i > 0 && words[i] == "?" {
@@ -54,7 +55,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				return numbers[0]
 			}
 			words[index] = "?"
-			index = 0
+			index = i + 1
 		case "-":
 			i = index - 1
 			for i > 0 && words[i] == "?" {
@@ -71,7 +72,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				return numbers[0]
 			}
 			words[index] = "?"
-			index = 0
+			index = i + 1
 		case "*":
 			i = index - 1
 			for i > 0 && words[i] == "?" {
@@ -88,7 +89,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				return numbers[0]
 			}
 			words[index] = "?"
-			index = 0
+			index = i + 1
 		case "/":
 			i = index - 1
 			for i > 0 && words[i] == "?" {
@@ -105,9 +106,8 @@ func RPNTuringMachine(RPNInput string) float64 {
 				return numbers[0]
 			}
 			words[index] = "?"
-			index = 0
+			index = i + 1
 		case "^":
-			// Binary operator
 			i = index - 1
 			for i > 0 && words[i] == "?" {
 				i--
@@ -123,7 +123,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				return numbers[0]
 			}
 			words[index] = "?"
-			index = 0
+			index = i + 1
 		default:
 			// Not a known operator, it must be an operand
 			if numbers[index], err = strconv.ParseFloat(words[index], 64); err != nil {
