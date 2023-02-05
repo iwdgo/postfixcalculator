@@ -20,79 +20,113 @@ func RPNTuringMachine(RPNInput string) float64 {
 	numbers := make([]float64, len(words))
 	// i is the index in the current operation
 	// lo and ro hold values of left and right operand as writing to the slice is more expensive
-	i, index, ro, lo := 0, 0, 0.0, 0.0
-	var w string
-	searchOperand := func() {
-		for i > 0 && words[i] == "?" {
-			i--
-		}
-	}
-	operationComplete := func() {
-		// Mark operation as complete
-		words[index] = "?"
-		// Re-start for loop without break, nor while style. ()
-		index = 0
-	}
+	i, index, lastIndex, ro, lo := 0, 0, len(words)-1, 0.0, 0.0
 	var err error
-	for index, w = range words {
+	for index = range words {
 		// Move on the band until an operator is found
-		switch w {
+		switch words[index] {
 		case "?": // Ignore explicitly reserved words
 		case "sqrt":
 			// Unary operator
 			i = index - 1
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			numbers[i] = math.Sqrt(numbers[i])
-			operationComplete()
+			if index == lastIndex {
+				return numbers[0]
+			}
+			words[index] = "?"
+			index = 0
 		case "+":
 			i = index - 1
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			ro = numbers[i]
 			words[i] = "?"
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			lo = numbers[i]
 			numbers[i] = lo + ro
-			operationComplete()
+			if index == lastIndex {
+				return numbers[0]
+			}
+			words[index] = "?"
+			index = 0
 		case "-":
 			i = index - 1
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			ro = numbers[i]
 			words[i] = "?"
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			lo = numbers[i]
 			numbers[i] = lo - ro
-			operationComplete()
+			if index == lastIndex {
+				return numbers[0]
+			}
+			words[index] = "?"
+			index = 0
 		case "*":
 			i = index - 1
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			ro = numbers[i]
 			words[i] = "?"
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			lo = numbers[i]
 			numbers[i] = lo * ro
-			operationComplete()
+			if index == lastIndex {
+				return numbers[0]
+			}
+			words[index] = "?"
+			index = 0
 		case "/":
 			i = index - 1
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			ro = numbers[i]
 			words[i] = "?"
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			lo = numbers[i]
 			numbers[i] = lo / ro
-			operationComplete()
+			if index == lastIndex {
+				return numbers[0]
+			}
+			words[index] = "?"
+			index = 0
 		case "^":
 			// Binary operator
 			i = index - 1
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			ro = numbers[i]
 			words[i] = "?"
-			searchOperand()
+			for i > 0 && words[i] == "?" {
+				i--
+			}
 			lo = numbers[i]
 			numbers[i] = math.Pow(lo, ro)
-			operationComplete()
+			if index == lastIndex {
+				return numbers[0]
+			}
+			words[index] = "?"
+			index = 0
 		default:
 			// Not a known operator, it must be an operand
-			if numbers[index], err = strconv.ParseFloat(w, 64); err != nil {
+			if numbers[index], err = strconv.ParseFloat(words[index], 64); err != nil {
 				fmt.Printf("%v\n%v\n", words, numbers)
 				panic(fmt.Sprintf("Invalid operator or operand: %s", words[i]))
 			}
