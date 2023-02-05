@@ -8,7 +8,7 @@
 # Reverse Polish Notation calculator
 
 Several solutions to this well-known problem show dramatic differences depending on the approach.
-A Turing machine emulation rivals the method using the stack emulation of reference.
+A Turing machine emulation rivals the method of reference using a stack emulation.
 
 ## Features
 
