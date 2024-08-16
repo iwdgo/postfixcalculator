@@ -25,7 +25,8 @@ func RPNTuringMachine(RPNInput string) float64 {
 	for index = range words {
 		// Move on the band until an operator is found
 		switch words[index] {
-		case "?": // Ignore explicitly reserved words
+		case "?":
+			break // Ignore explicitly reserved words
 		case "sqrt":
 			// Unary operator
 			i = index - 1
