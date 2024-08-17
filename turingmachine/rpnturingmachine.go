@@ -18,12 +18,11 @@ func RPNTuringMachine(RPNInput string) float64 {
 	words := strings.Fields(RPNInput)
 	// A slice of floats contains the values to avoid repeating conversion and words.
 	numbers := make([]float64, len(words))
-	// i is the index in the current operation
+	// index points to the current operator
 	// lo and ro hold values of left and right operand as writing to the slice is more expensive
 	i, index, lastIndex, ro, lo := 0, 0, len(words)-1, 0.0, 0.0
 	var err error
 	for index = range words {
-		// Move on the band until an operator is found
 		switch words[index] {
 		case "?":
 			break // Ignore explicitly reserved words
