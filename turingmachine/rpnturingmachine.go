@@ -20,12 +20,11 @@ func RPNTuringMachine(RPNInput string) float64 {
 	numbers := make([]float64, len(words))
 	// index points to the current operator
 	// lo and ro hold values of left and right operand as writing to the slice is more expensive
-	i, index, lastIndex, ro, lo := 0, 0, len(words)-1, 0.0, 0.0
+	i, index, ro, lo := 0, 0, 0.0, 0.0
+	// Instruction words[index] = "?" erases the operator after execution
 	var err error
 	for index = range words {
 		switch words[index] {
-		case "?":
-			break // Ignore explicitly reserved words
 		case "sqrt":
 			// Unary operator
 			i = index - 1
@@ -33,11 +32,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 				i--
 			}
 			numbers[i] = math.Sqrt(numbers[i])
-			if index == lastIndex {
-				return numbers[0]
-			}
 			words[index] = "?"
-			index = i + 1
 		// Binary operators
 		case "+":
 			i = index - 1
@@ -51,11 +46,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			}
 			lo = numbers[i]
 			numbers[i] = lo + ro
-			if index == lastIndex {
-				return numbers[0]
-			}
 			words[index] = "?"
-			index = i + 1
 		case "-":
 			i = index - 1
 			for i > 0 && words[i] == "?" {
@@ -68,11 +59,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			}
 			lo = numbers[i]
 			numbers[i] = lo - ro
-			if index == lastIndex {
-				return numbers[0]
-			}
 			words[index] = "?"
-			index = i + 1
 		case "*":
 			i = index - 1
 			for i > 0 && words[i] == "?" {
@@ -85,11 +72,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			}
 			lo = numbers[i]
 			numbers[i] = lo * ro
-			if index == lastIndex {
-				return numbers[0]
-			}
 			words[index] = "?"
-			index = i + 1
 		case "/":
 			i = index - 1
 			for i > 0 && words[i] == "?" {
@@ -102,11 +85,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			}
 			lo = numbers[i]
 			numbers[i] = lo / ro
-			if index == lastIndex {
-				return numbers[0]
-			}
 			words[index] = "?"
-			index = i + 1
 		case "^":
 			i = index - 1
 			for i > 0 && words[i] == "?" {
@@ -119,11 +98,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			}
 			lo = numbers[i]
 			numbers[i] = math.Pow(lo, ro)
-			if index == lastIndex {
-				return numbers[0]
-			}
 			words[index] = "?"
-			index = i + 1
 		default:
 			// Not a known operator, it must be an operand
 			if numbers[index], err = strconv.ParseFloat(words[index], 64); err != nil {
