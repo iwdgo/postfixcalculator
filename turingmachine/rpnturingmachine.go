@@ -11,8 +11,8 @@ import (
 // RPNTuringMachine returns the result of a string in reverse polish notation (postfix) using a turing machine.
 // It expects a band as a string read from left to write complying with postfix notation where blank
 // spaces operands and operators.
-// Both ? and num are reserved keywords.
-// Method will panic on failed conversions or unknown operators.
+// ? is reserved.
+// Method will panic on failed conversions and unknown operators.
 func RPNTuringMachine(RPNInput string) float64 {
 	// A slice of words contains the expression.
 	words := strings.Fields(RPNInput)
