@@ -28,7 +28,9 @@ jobs:
       run: go test -cover -coverprofile=coverage.out -covermode=atomic -race ./...
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Benchmark
       run: go test -benchtime 5x -cpu 1,2,4 -bench=. ./... | grep Benchmark
