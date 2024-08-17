@@ -129,7 +129,7 @@ func RPNTuringMachine(RPNInput string) float64 {
 			// Not a known operator, it must be an operand
 			if numbers[index], err = strconv.ParseFloat(words[index], 64); err != nil {
 				fmt.Printf("%v\n%v\n", words, numbers)
-				panic(fmt.Sprintf("Invalid operator or operand: %s", words[i]))
+				panic(fmt.Sprintf("Invalid operator or operand: %s", words[index]))
 			}
 		}
 	}
